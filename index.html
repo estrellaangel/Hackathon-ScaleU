@@ -80,7 +80,7 @@
         </p>
       </div>
 
-      <div class="grid">
+      <!-- <div class="grid">
         <aside class="sidebar-insurance">
           <div class="card sidebar-card">
             <div class="card-head">
@@ -120,42 +120,66 @@
               <li>Ask for itemized bills if charges look wrong</li>
             </ul>
           </div>
-        </aside>
+        </aside> -->
 
-        <section class="col-right">
-          <div class="chat card">
-            <div class="chat-head">
-              <div>
-                <div class="card-title">Chat</div>
-                <div class="muted small">Ask about coverage, costs, and best options under your plan.</div>
-              </div>
+        <div id="planBar" class="plan-bar">
+          <div class="plan-title">Select your insurance plan</div>
 
-              <div class="chat-actions">
-                <button class="btn ghost" id="resetChatBtn">Reset</button>
-              </div>
+          <div class="plan-controls">
+            <select id="planDropdown" class="plan-dropdown">
+              <option value="">Choose a plan…</option>
+            </select>
+          </div>
+
+          <div id="planDocs" class="plan-docs hidden"></div>
+        </div>
+
+      <section class="col-right">
+        <div class="chat card is-locked">
+          <div class="chat-head">
+            <div>
+              <div class="card-title">Chat</div>
+              <div class="muted small">Ask about coverage, costs, and best options under your plan.</div>
             </div>
 
-            <div class="quick">
-              <button class="chip" data-prompt="I need care for a sore throat. What is my cheapest option?">Sore throat</button>
-              <button class="chip" data-prompt="Is telehealth covered and when should I use it?">Telehealth</button>
-              <button class="chip" data-prompt="I think I need urgent care. What will it likely cost under my plan?">Urgent care cost</button>
-              <button class="chip" data-prompt="What should I ask before getting a lab test so I do not get surprise bills?">Avoid surprise bills</button>
-            </div>
-
-            <div class="messages" id="messages">
-              <!-- Messages render here -->
-            </div>
-
-            <form class="composer" id="chatForm">
-              <input id="chatInput" type="text" placeholder="Type your question..." autocomplete="off" />
-              <button class="btn primary" type="submit">Send</button>
-            </form>
-
-            <div class="muted small chat-foot">
-              Prototype mode: this uses a fake response generator. Your teammate can connect real chatbot later.
+            <div class="chat-actions">
+              <button class="btn ghost" id="resetChatBtn" type="button">Reset</button>
             </div>
           </div>
-        </section>
+
+          <!-- Chat lock overlay (shown until plan selected) -->
+          <div id="chatLock" class="chat-lock">
+            <div class="chat-lock-box">
+              <div class="chat-lock-title">Select your insurance plan first</div>
+              <div class="chat-lock-sub">
+                I’ll unlock the chat once you pick a plan, so answers match your coverage and costs.
+              </div>
+            </div>
+          </div>
+
+          <div class="quick">
+            <button class="chip" type="button" data-prompt="I need care for a sore throat. What is my cheapest option?">Sore throat</button>
+            <button class="chip" type="button" data-prompt="Is telehealth covered and when should I use it?">Telehealth</button>
+            <button class="chip" type="button" data-prompt="I think I need urgent care. What will it likely cost under my plan?">Urgent care cost</button>
+            <button class="chip" type="button" data-prompt="What should I ask before getting a lab test so I do not get surprise bills?">Avoid surprise bills</button>
+          </div>
+
+          <div class="messages" id="messages">
+            <!-- Messages render here -->
+          </div>
+
+          <form class="composer" id="chatForm">
+            <input id="chatInput" type="text" placeholder="Select an insurance plan to start..." autocomplete="off" disabled />
+            <button class="btn primary" type="submit" disabled>Send</button>
+          </form>
+
+          <div class="muted small chat-foot">
+            Educational prototype. Not medical advice.
+          </div>
+        </div>
+      </section>
+
+        
       </div>
     </section>
 

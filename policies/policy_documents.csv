@@ -1,0 +1,4 @@
+policy_id, txt_file, pdf_file, link
+1, ../policies/asu_short_policy.txt, ../policies/asu_short_policy.pdf, https://eoss.asu.edu/health/billing-insurance/coverage-options
+1, ../policies/asu_ship_extracted.txt, ../policies/asu_ship_certificate.pdf, https://www.uhcsr.com/
+1, ../policies/asu_ship_key_value_blocks.txt, ../policies/asu_ship_certificate.pdf, https://www.uhcsr.com/
