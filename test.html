@@ -1,0 +1,777 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health Literacy Test - AIDed</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .test-page { padding: 40px 0; max-width: 900px; margin: 0 auto; }
+    .test-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(99, 102, 241, 0.05));
+      border-radius: 20px;
+    }
+    .test-header h1 { font-size: 36px; margin-bottom: 12px; color: var(--text); }
+    .test-info {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .test-info-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .test-content { background: white; border-radius: 18px; padding: 40px; box-shadow: var(--shadow); }
+    .question-card {
+      background: var(--soft);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+      transition: all 0.3s ease;
+    }
+    .question-card.answered {
+      border-color: var(--accent);
+      background: rgba(79, 70, 229, 0.03);
+    }
+    .question-number {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+    .question-text {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .options {
+      display: grid;
+      gap: 12px;
+    }
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .option:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.1);
+      transform: translateX(4px);
+    }
+    .option input[type="radio"] {
+      margin-top: 2px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+    .option label {
+      flex: 1;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .option.selected {
+      border-color: var(--accent);
+      background: rgba(79, 70, 229, 0.05);
+    }
+    .submit-section {
+      margin-top: 40px;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(99, 102, 241, 0.05));
+      border-radius: 16px;
+      text-align: center;
+    }
+    .submit-section h3 {
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .progress-indicator {
+      background: white;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .progress-text {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .progress-bar-test {
+      flex: 1;
+      background: var(--soft);
+      height: 12px;
+      border-radius: 10px;
+      margin: 0 20px;
+      overflow: hidden;
+    }
+    .progress-fill-test {
+      background: linear-gradient(90deg, var(--accent), #6366f1);
+      height: 100%;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+    .results-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .results-modal.show {
+      display: flex;
+    }
+    .results-content {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .results-score {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #6366f1);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 48px;
+      font-weight: 800;
+      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
+    }
+    .score-circle small {
+      font-size: 16px;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+    .pass { color: #10b981; }
+    .fail { color: #ef4444; }
+    .review-section {
+      margin-top: 30px;
+      padding: 20px;
+      background: var(--soft);
+      border-radius: 12px;
+    }
+    .review-item {
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .review-item.correct { background: rgba(16, 185, 129, 0.1); }
+    .review-item.incorrect { background: rgba(239, 68, 68, 0.1); }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>
+          <div class="brand-name">AIDed</div>
+          <div class="brand-sub">Your health insurance companion</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="course.html">Course</a>
+        <a href="index.html#assistant">Assistant</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap test-page">
+    <div class="test-header">
+      <h1>🎓 Health Literacy Test</h1>
+      <p class="muted">
+        Test your knowledge of health insurance, healthcare navigation, and using AIDed effectively.
+        You need 80% (16/20) to pass.
+      </p>
+      <div class="test-info">
+        <div class="test-info-item">
+          <span>📝</span> 20 Questions
+        </div>
+        <div class="test-info-item">
+          <span>⏱</span> ~20 minutes
+        </div>
+        <div class="test-info-item">
+          <span>✅</span> 80% to Pass
+        </div>
+      </div>
+    </div>
+
+    <div class="progress-indicator">
+      <span class="progress-text">Progress: <span id="answeredCount">0</span>/20</span>
+      <div class="progress-bar-test">
+        <div class="progress-fill-test" id="progressBar"></div>
+      </div>
+      <span class="progress-text" id="progressPercent">0%</span>
+    </div>
+
+    <form id="testForm" class="test-content">
+      <!-- Question 1 -->
+      <div class="question-card" data-question="1">
+        <div class="question-number">Question 1</div>
+        <div class="question-text">What is a premium in health insurance?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q1a" name="q1" value="a">
+            <label for="q1a">The amount you pay out-of-pocket before insurance starts paying</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q1b" name="q1" value="b">
+            <label for="q1b">The regular payment you make to maintain your insurance coverage</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q1c" name="q1" value="c">
+            <label for="q1c">A fixed amount you pay for each doctor visit</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q1d" name="q1" value="d">
+            <label for="q1d">The maximum you'll pay in a year</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 2 -->
+      <div class="question-card" data-question="2">
+        <div class="question-number">Question 2</div>
+        <div class="question-text">Which of the following best describes a deductible?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q2a" name="q2" value="a">
+            <label for="q2a">The percentage of costs you pay after meeting your deductible</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q2b" name="q2" value="b">
+            <label for="q2b">The amount you must pay before your insurance begins to pay for covered services</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q2c" name="q2" value="c">
+            <label for="q2c">A monthly fee to keep your insurance active</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q2d" name="q2" value="d">
+            <label for="q2d">The fee charged by out-of-network providers</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 3 -->
+      <div class="question-card" data-question="3">
+        <div class="question-number">Question 3</div>
+        <div class="question-text">What is the main advantage of using in-network healthcare providers?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q3a" name="q3" value="a">
+            <label for="q3a">They provide better quality care</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q3b" name="q3" value="b">
+            <label for="q3b">They have more convenient locations</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q3c" name="q3" value="c">
+            <label for="q3c">They have negotiated lower rates with your insurance, reducing your costs</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q3d" name="q3" value="d">
+            <label for="q3d">They don't require insurance cards</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 4 -->
+      <div class="question-card" data-question="4">
+        <div class="question-number">Question 4</div>
+        <div class="question-text">If you have a $25 copay for doctor visits, when do you typically pay this amount?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q4a" name="q4" value="a">
+            <label for="q4a">At the end of the year</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q4b" name="q4" value="b">
+            <label for="q4b">At the time of your visit</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q4c" name="q4" value="c">
+            <label for="q4c">After you meet your deductible</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q4d" name="q4" value="d">
+            <label for="q4d">Only for emergency visits</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 5 -->
+      <div class="question-card" data-question="5">
+        <div class="question-number">Question 5</div>
+        <div class="question-text">Which situation typically requires emergency room care?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q5a" name="q5" value="a">
+            <label for="q5a">A mild fever that's lasted 2 days</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q5b" name="q5" value="b">
+            <label for="q5b">Chest pain with difficulty breathing</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q5c" name="q5" value="c">
+            <label for="q5c">A sore throat</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q5d" name="q5" value="d">
+            <label for="q5d">Needing a prescription refill</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 6 -->
+      <div class="question-card" data-question="6">
+        <div class="question-number">Question 6</div>
+        <div class="question-text">Telehealth is generally most appropriate for which of the following?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q6a" name="q6" value="a">
+            <label for="q6a">Severe injuries requiring stitches</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q6b" name="q6" value="b">
+            <label for="q6b">Common illnesses like colds, flu, or minor skin conditions</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q6c" name="q6" value="c">
+            <label for="q6c">Heart attacks</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q6d" name="q6" value="d">
+            <label for="q6d">Broken bones</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 7 -->
+      <div class="question-card" data-question="7">
+        <div class="question-number">Question 7</div>
+        <div class="question-text">What should you do BEFORE scheduling a medical procedure to avoid surprise bills?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q7a" name="q7" value="a">
+            <label for="q7a">Wait until after the procedure to worry about costs</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q7b" name="q7" value="b">
+            <label for="q7b">Verify the provider is in-network and ask for a cost estimate</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q7c" name="q7" value="c">
+            <label for="q7c">Assume all costs will be covered</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q7d" name="q7" value="d">
+            <label for="q7d">Only check if it's an emergency</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 8 -->
+      <div class="question-card" data-question="8">
+        <div class="question-number">Question 8</div>
+        <div class="question-text">What is coinsurance?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q8a" name="q8" value="a">
+            <label for="q8a">A monthly payment for insurance</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q8b" name="q8" value="b">
+            <label for="q8b">The percentage of costs you pay after meeting your deductible</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q8c" name="q8" value="c">
+            <label for="q8c">A fixed dollar amount for services</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q8d" name="q8" value="d">
+            <label for="q8d">Having two insurance policies</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 9 -->
+      <div class="question-card" data-question="9">
+        <div class="question-number">Question 9</div>
+        <div class="question-text">What is the out-of-pocket maximum?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q9a" name="q9" value="a">
+            <label for="q9a">The most you pay for your premium each year</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q9b" name="q9" value="b">
+            <label for="q9b">The maximum your insurance will pay</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q9c" name="q9" value="c">
+            <label for="q9c">The most you'll pay for covered services in a year; after this, insurance pays 100%</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q9d" name="q9" value="d">
+            <label for="q9d">The amount you pay for out-of-network care</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 10 -->
+      <div class="question-card" data-question="10">
+        <div class="question-number">Question 10</div>
+        <div class="question-text">When should you use urgent care instead of the emergency room?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q10a" name="q10" value="a">
+            <label for="q10a">For life-threatening emergencies</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q10b" name="q10" value="b">
+            <label for="q10b">For serious but not life-threatening issues when your doctor isn't available</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q10c" name="q10" value="c">
+            <label for="q10c">For routine check-ups</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q10d" name="q10" value="d">
+            <label for="q10d">Never, always use the ER</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 11 -->
+      <div class="question-card" data-question="11">
+        <div class="question-number">Question 11</div>
+        <div class="question-text">What information is typically found on your insurance card?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q11a" name="q11" value="a">
+            <label for="q11a">Your medical history</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q11b" name="q11" value="b">
+            <label for="q11b">Member ID, group number, and customer service phone number</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q11c" name="q11" value="c">
+            <label for="q11c">Your doctor's contact information</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q11d" name="q11" value="d">
+            <label for="q11d">Your prescription medications</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 12 -->
+      <div class="question-card" data-question="12">
+        <div class="question-number">Question 12</div>
+        <div class="question-text">Which medication option is typically the least expensive?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q12a" name="q12" value="a">
+            <label for="q12a">Brand-name medications</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q12b" name="q12" value="b">
+            <label for="q12b">Specialty medications</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q12c" name="q12" value="c">
+            <label for="q12c">Generic medications</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q12d" name="q12" value="d">
+            <label for="q12d">All cost the same</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 13 -->
+      <div class="question-card" data-question="13">
+        <div class="question-number">Question 13</div>
+        <div class="question-text">How can AIDed help you navigate your health insurance?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q13a" name="q13" value="a">
+            <label for="q13a">It can prescribe medications</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q13b" name="q13" value="b">
+            <label for="q13b">It provides plan-specific guidance and helps compare care options like telehealth vs urgent care</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q13c" name="q13" value="c">
+            <label for="q13c">It replaces your doctor</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q13d" name="q13" value="d">
+            <label for="q13d">It pays your medical bills</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 14 -->
+      <div class="question-card" data-question="14">
+        <div class="question-number">Question 14</div>
+        <div class="question-text">What is the first step when using AIDed's AI assistant?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q14a" name="q14" value="a">
+            <label for="q14a">Immediately start asking medical questions</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q14b" name="q14" value="b">
+            <label for="q14b">Select your insurance plan from the sidebar</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q14c" name="q14" value="c">
+            <label for="q14c">Upload your medical records</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q14d" name="q14" value="d">
+            <label for="q14d">Schedule a doctor appointment</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 15 -->
+      <div class="question-card" data-question="15">
+        <div class="question-number">Question 15</div>
+        <div class="question-text">What does preventive care include?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q15a" name="q15" value="a">
+            <label for="q15a">Only emergency services</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q15b" name="q15" value="b">
+            <label for="q15b">Check-ups, screenings, and vaccinations to prevent illness</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q15c" name="q15" value="c">
+            <label for="q15c">Surgery and hospitalization</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q15d" name="q15" value="d">
+            <label for="q15d">Prescription medications only</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 16 -->
+      <div class="question-card" data-question="16">
+        <div class="question-number">Question 16</div>
+        <div class="question-text">True or False: You should always verify a provider is in-network before receiving care.</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q16a" name="q16" value="a">
+            <label for="q16a">True - This helps avoid surprise bills and high out-of-network costs</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q16b" name="q16" value="b">
+            <label for="q16b">False - It doesn't matter if they're in-network</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 17 -->
+      <div class="question-card" data-question="17">
+        <div class="question-number">Question 17</div>
+        <div class="question-text">What is a formulary?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q17a" name="q17" value="a">
+            <label for="q17a">A type of insurance plan</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q17b" name="q17" value="b">
+            <label for="q17b">The list of prescription drugs covered by your insurance plan</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q17c" name="q17" value="c">
+            <label for="q17c">A medical form you fill out</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q17d" name="q17" value="d">
+            <label for="q17d">A copayment amount</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 18 -->
+      <div class="question-card" data-question="18">
+        <div class="question-number">Question 18</div>
+        <div class="question-text">Which is typically the MOST expensive care option?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q18a" name="q18" value="a">
+            <label for="q18a">Telehealth visit</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q18b" name="q18" value="b">
+            <label for="q18b">Primary care doctor visit</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q18c" name="q18" value="c">
+            <label for="q18c">Urgent care visit</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q18d" name="q18" value="d">
+            <label for="q18d">Emergency room visit</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 19 -->
+      <div class="question-card" data-question="19">
+        <div class="question-number">Question 19</div>
+        <div class="question-text">What is one benefit of completing the AIDed Health Literacy Course?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q19a" name="q19" value="a">
+            <label for="q19a">You get free health insurance</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q19b" name="q19" value="b">
+            <label for="q19b">You learn to make informed healthcare decisions and avoid unnecessary costs</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q19c" name="q19" value="c">
+            <label for="q19c">You become a certified doctor</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q19d" name="q19" value="d">
+            <label for="q19d">You never have to pay for healthcare again</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question 20 -->
+      <div class="question-card" data-question="20">
+        <div class="question-number">Question 20</div>
+        <div class="question-text">What should you do if you receive a medical bill that seems incorrect or surprisingly high?</div>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="q20a" name="q20" value="a">
+            <label for="q20a">Pay it immediately without question</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q20b" name="q20" value="b">
+            <label for="q20b">Ignore it and hope it goes away</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q20c" name="q20" value="c">
+            <label for="q20c">Request an itemized bill and contact your insurance to verify coverage</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="q20d" name="q20" value="d">
+            <label for="q20d">Post about it on social media</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-section">
+        <h3>Ready to submit your test?</h3>
+        <p class="muted">Make sure you've answered all questions before submitting.</p>
+        <button type="submit" class="btn primary" style="margin-top: 16px; padding: 12px 32px; font-size: 16px;">
+          Submit Test
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <!-- Results Modal -->
+  <div id="resultsModal" class="results-modal">
+    <div class="results-content">
+      <div class="results-score">
+        <div class="score-circle" id="scoreCircle">
+          <div>
+            <span id="scoreNumber">0</span>%
+            <small>Score</small>
+          </div>
+        </div>
+        <h2 id="resultTitle">Great Job!</h2>
+        <p class="muted" id="resultMessage"></p>
+      </div>
+
+      <div class="review-section">
+        <h3>Review Your Answers</h3>
+        <div id="reviewList"></div>
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-top: 30px; justify-content: center; flex-wrap: wrap;">
+        <button onclick="retakeTest()" class="btn ghost">Retake Test</button>
+        <a href="course.html" class="btn">Back to Course</a>
+        <a href="index.html#assistant" class="btn primary">Use AIDed Assistant</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="wrap footer">
+    <div class="muted small">
+      AIDed © 2026 - Educational tool for health insurance literacy. Not medical advice.
+    </div>
+  </footer>
+
+  <script src="test.js"></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 1: Understanding Your Insurance - AIDed</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .module-page { padding: 40px 0; max-width: 800px; margin: 0 auto; }
+    .module-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(99, 102, 241, 0.05));
+      border-radius: 20px;
+    }
+    .module-number-big {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .module-header h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .module-content { background: white; border-radius: 18px; padding: 40px; box-shadow: var(--shadow); }
+    .module-content h2 {
+      color: var(--accent);
+      margin-top: 30px;
+      margin-bottom: 16px;
+      font-size: 24px;
+    }
+    .module-content h3 {
+      color: var(--text);
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+    .module-content p { line-height: 1.8; margin-bottom: 16px; }
+    .module-content ul, .module-content ol { line-height: 1.8; margin: 16px 0; padding-left: 24px; }
+    .module-content li { margin: 8px 0; }
+    .key-term {
+      background: rgba(79, 70, 229, 0.08);
+      padding: 20px;
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      margin: 24px 0;
+    }
+    .key-term strong { color: var(--accent); font-size: 18px; }
+    .example-box {
+      background: var(--soft);
+      padding: 20px;
+      border-radius: 12px;
+      margin: 24px 0;
+    }
+    .example-box h4 {
+      color: var(--accent);
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+    .module-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      gap: 16px;
+    }
+    .progress-bar {
+      background: var(--soft);
+      height: 8px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, var(--accent), #6366f1);
+      height: 100%;
+      width: 16.67%;
+      transition: width 0.3s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>
+          <div class="brand-name">AIDed</div>
+          <div class="brand-sub">Your health insurance companion</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="course.html">Course</a>
+        <a href="test.html">Take Test</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap module-page">
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+
+    <div class="module-header">
+      <div class="module-number-big">MODULE 01</div>
+      <h1>Understanding Your Insurance</h1>
+      <p class="muted">Master the fundamentals of health insurance</p>
+    </div>
+
+    <div class="module-content">
+      <h2>Introduction</h2>
+      <p>
+        Health insurance can feel overwhelming with its complex terminology and confusing policies. 
+        But understanding the basics is crucial for making informed healthcare decisions and avoiding 
+        unexpected costs. This module will break down the essential concepts you need to know.
+      </p>
+
+      <h2>Key Insurance Terms</h2>
+
+      <div class="key-term">
+        <strong>Premium</strong>
+        <p>The amount you pay regularly (usually monthly) to maintain your health insurance coverage, 
+        whether you use healthcare services or not. Think of it like a gym membership – you pay even 
+        if you don't go.</p>
+      </div>
+
+      <div class="key-term">
+        <strong>Deductible</strong>
+        <p>The amount you must pay out-of-pocket for healthcare services before your insurance starts 
+        to pay. For example, if your deductible is $1,000, you pay the first $1,000 of covered services yourself.</p>
+      </div>
+
+      <div class="key-term">
+        <strong>Copay (Copayment)</strong>
+        <p>A fixed amount you pay for a covered service, usually at the time of service. For example, 
+        you might pay a $25 copay for a doctor's visit or $10 for a prescription.</p>
+      </div>
+
+      <div class="key-term">
+        <strong>Coinsurance</strong>
+        <p>Your share of costs for a covered service, calculated as a percentage. For example, if your 
+        coinsurance is 20%, you pay 20% of the cost and your insurance pays 80%.</p>
+      </div>
+
+      <div class="key-term">
+        <strong>Out-of-Pocket Maximum</strong>
+        <p>The most you'll have to pay for covered services in a year. After you reach this amount, 
+        your insurance pays 100% of covered services.</p>
+      </div>
+
+      <h2>In-Network vs Out-of-Network</h2>
+      <p>
+        Understanding network status can save you hundreds or even thousands of dollars.
+      </p>
+
+      <h3>In-Network Providers</h3>
+      <p>
+        Healthcare providers (doctors, hospitals, labs) who have a contract with your insurance company. 
+        They've agreed to lower rates, which means lower costs for you.
+      </p>
+      <ul>
+        <li>Lower copays and coinsurance</li>
+        <li>Costs count toward your deductible and out-of-pocket maximum</li>
+        <li>Generally covered by your plan</li>
+      </ul>
+
+      <h3>Out-of-Network Providers</h3>
+      <p>
+        Providers who don't have a contract with your insurance. Using them typically costs more.
+      </p>
+      <ul>
+        <li>Higher copays and coinsurance (often 40-50%)</li>
+        <li>May not count toward deductible</li>
+        <li>You might pay the difference between what the provider charges and what insurance pays</li>
+        <li>Some plans don't cover out-of-network care at all</li>
+      </ul>
+
+      <div class="example-box">
+        <h4>💡 Example Scenario</h4>
+        <p><strong>Sarah needs an MRI. Let's compare costs:</strong></p>
+        <p><strong>In-Network Facility:</strong></p>
+        <ul>
+          <li>MRI Cost: $1,200 (negotiated rate)</li>
+          <li>Her Deductible: Already met</li>
+          <li>Her Coinsurance: 20%</li>
+          <li><strong>Sarah Pays: $240</strong></li>
+        </ul>
+        <p><strong>Out-of-Network Facility:</strong></p>
+        <ul>
+          <li>MRI Cost: $2,000 (no negotiated rate)</li>
+          <li>Insurance Pays: Based on "usual and customary" ($1,000)</li>
+          <li>Her Coinsurance: 40% of $1,000 = $400</li>
+          <li>Balance Billing: $1,000 (the difference)</li>
+          <li><strong>Sarah Pays: $1,400</strong></li>
+        </ul>
+        <p class="muted">By choosing in-network, Sarah saves $1,160!</p>
+      </div>
+
+      <h2>How to Find In-Network Providers</h2>
+      <ol>
+        <li><strong>Check your insurance website:</strong> Most have a "Find a Doctor" tool</li>
+        <li><strong>Call the provider:</strong> Always verify they're in-network before your appointment</li>
+        <li><strong>Call your insurance:</strong> The member services number on your insurance card</li>
+        <li><strong>Check your insurance card:</strong> It usually has website info and phone numbers</li>
+      </ol>
+
+      <h2>Understanding Your Insurance Card</h2>
+      <p>Your insurance card contains important information you'll need when seeking care:</p>
+      <ul>
+        <li><strong>Member ID:</strong> Your unique identification number</li>
+        <li><strong>Group Number:</strong> If you're on a group plan (like through school)</li>
+        <li><strong>Plan Type:</strong> PPO, HMO, EPO, etc.</li>
+        <li><strong>Copay Amounts:</strong> What you'll pay for common services</li>
+        <li><strong>Customer Service:</strong> Phone number to call with questions</li>
+        <li><strong>Website:</strong> Where to check benefits and find providers</li>
+      </ul>
+
+      <div class="example-box">
+        <h4>🎯 Action Item</h4>
+        <p>Take out your insurance card right now and locate these key pieces of information. 
+        Take a photo of both sides for easy reference!</p>
+      </div>
+
+      <h2>Using AIDed to Navigate Insurance</h2>
+      <p>
+        Our AI chatbot can help you understand your specific plan. Here's how:
+      </p>
+      <ul>
+        <li>Select your insurance provider in the AIDed assistant</li>
+        <li>Ask questions like "What's my copay for urgent care?" or "Is this doctor in-network?"</li>
+        <li>Get personalized cost estimates before seeking care</li>
+        <li>Compare options (telehealth vs in-person, urgent care vs ER)</li>
+        <li>Learn what questions to ask providers to avoid surprise bills</li>
+      </ul>
+
+      <h2>Key Takeaways</h2>
+      <ul>
+        <li>✅ Premiums are what you pay to have insurance; deductibles are what you pay before insurance kicks in</li>
+        <li>✅ Always check if a provider is in-network before receiving care</li>
+        <li>✅ Keep your insurance card with you and understand what information it contains</li>
+        <li>✅ Know your copays, deductible, and out-of-pocket maximum</li>
+        <li>✅ Use AIDed to get personalized guidance for your specific plan</li>
+      </ul>
+
+      <div class="module-nav">
+        <a href="course.html" class="btn ghost">← Back to Course</a>
+        <a href="module2.html" class="btn primary">Next: When to Seek Care →</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="wrap footer">
+    <div class="muted small">
+      AIDed © 2026 - Educational tool for health insurance literacy. Not medical advice.
+    </div>
+  </footer>
+</body>
+</html>

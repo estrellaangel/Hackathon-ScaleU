@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Module 4: Prescription Coverage - AIDed</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <header class="header">
+    <div class="wrap">
+      <div class="logo"><i class="fa-solid fa-heartbeat"></i> AIDed</div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#assistant">Assistant</a>
+        <a href="course.html" class="active">Health Literacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap" style="padding: 30px 20px;">
+    <!-- Module Header -->
+    <div style="margin-bottom: 30px;">
+      <a href="course.html" class="btn ghost small">← Back to Course</a>
+    </div>
+
+    <div style="background: linear-gradient(135deg, #f8faff, #e8f0fe); padding: 40px; border-radius: 16px; margin-bottom: 40px;">
+      <div style="display: inline-block; padding: 8px 16px; background: white; border-radius: 20px; font-size: 14px; font-weight: 600; color: #4F46E5; margin-bottom: 16px;">
+        Module 4 of 6
+      </div>
+      <h1 style="font-size: 36px; margin-bottom: 12px;">Prescription Coverage</h1>
+      <p style="font-size: 18px; color: #64748b;">Learn how to save hundreds of dollars on medications by understanding drug tiers, generic options, and your plan's formulary.</p>
+      
+      <!-- Progress Bar -->
+      <div style="margin-top: 24px;">
+        <div style="background: rgba(79, 70, 229, 0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+          <div style="background: #4F46E5; height: 100%; width: 66.67%; transition: width 0.3s;"></div>
+        </div>
+        <div style="text-align: right; margin-top: 8px; font-size: 14px; color: #64748b;">67% Complete</div>
+      </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content-section">
+      <h2>Understanding Drug Tiers</h2>
+      <p>Insurance companies organize prescription medications into "tiers" based on cost. Lower tiers have lower copays, while higher tiers cost more out of pocket.</p>
+    </div>
+
+    <!-- Drug Tier Cards -->
+    <div style="display: grid; gap: 20px; margin: 40px 0;">
+      <!-- Tier 1 -->
+      <div style="background: white; padding: 24px; border-radius: 12px; border: 2px solid #10b981; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <h3 style="font-size: 22px; margin: 0; color: #065f46;">Tier 1 - Preferred Generic</h3>
+          <div style="background: #d1fae5; color: #065f46; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;">
+            $5-15 copay
+          </div>
+        </div>
+        <p style="color: #64748b; margin-bottom: 12px;">Most affordable option. These are generic medications that work just as well as brand-name drugs.</p>
+        <div style="background: #f0fdf4; padding: 12px; border-radius: 8px; border-left: 4px solid #10b981;">
+          <strong style="color: #065f46;">Examples:</strong> Generic antibiotics, blood pressure medications, antidepressants
+        </div>
+      </div>
+
+      <!-- Tier 2 -->
+      <div style="background: white; padding: 24px; border-radius: 12px; border: 2px solid #3b82f6; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <h3 style="font-size: 22px; margin: 0; color: #1e40af;">Tier 2 - Generic</h3>
+          <div style="background: #dbeafe; color: #1e40af; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;">
+            $20-40 copay
+          </div>
+        </div>
+        <p style="color: #64748b; margin-bottom: 12px;">Still generic, but less commonly prescribed or slightly more expensive to produce.</p>
+        <div style="background: #eff6ff; padding: 12px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+          <strong style="color: #1e40af;">Examples:</strong> Generic extended-release formulations, certain generics
+        </div>
+      </div>
+
+      <!-- Tier 3 -->
+      <div style="background: white; padding: 24px; border-radius: 12px; border: 2px solid #f59e0b; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <h3 style="font-size: 22px; margin: 0; color: #92400e;">Tier 3 - Preferred Brand</h3>
+          <div style="background: #fef3c7; color: #92400e; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;">
+            $50-80 copay
+          </div>
+        </div>
+        <p style="color: #64748b; margin-bottom: 12px;">Brand-name drugs on your insurer's preferred list, or generics with no Tier 1/2 alternative.</p>
+        <div style="background: #fffbeb; padding: 12px; border-radius: 8px; border-left: 4px solid #f59e0b;">
+          <strong style="color: #92400e;">Examples:</strong> Common brand-name drugs, some specialty medications
+        </div>
+      </div>
+
+      <!-- Tier 4 -->
+      <div style="background: white; padding: 24px; border-radius: 12px; border: 2px solid #ef4444; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <h3 style="font-size: 22px; margin: 0; color: #991b1b;">Tier 4 - Non-Preferred Brand</h3>
+          <div style="background: #fee2e2; color: #991b1b; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;">
+            $100-200+ copay
+          </div>
+        </div>
+        <p style="color: #64748b; margin-bottom: 12px;">Most expensive option. Brand-name drugs not on the preferred list.</p>
+        <div style="background: #fef2f2; padding: 12px; border-radius: 8px; border-left: 4px solid #ef4444;">
+          <strong style="color: #991b1b;">Examples:</strong> Newer brand-name drugs, non-preferred specialty medications
+        </div>
+      </div>
+
+      <!-- Tier 5 (Specialty) -->
+      <div style="background: white; padding: 24px; border-radius: 12px; border: 2px solid #8b5cf6; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;">
+          <h3 style="font-size: 22px; margin: 0; color: #5b21b6;">Tier 5 - Specialty</h3>
+          <div style="background: #f3e8ff; color: #5b21b6; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px;">
+            25-33% coinsurance
+          </div>
+        </div>
+        <p style="color: #64748b; margin-bottom: 12px;">High-cost medications for complex conditions. Often require special handling.</p>
+        <div style="background: #faf5ff; padding: 12px; border-radius: 8px; border-left: 4px solid #8b5cf6;">
+          <strong style="color: #5b21b6;">Examples:</strong> Cancer medications, biologics, drugs requiring refrigeration
+        </div>
+      </div>
+    </div>
+
+    <!-- Generic vs Brand Comparison -->
+    <div class="content-section">
+      <h2>Generic vs. Brand-Name Medications</h2>
+      <div style="background: linear-gradient(135deg, #fff7ed, #fed7aa); padding: 30px; border-radius: 12px; margin-top: 24px; border-left: 4px solid #f59e0b;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div>
+            <h3 style="font-size: 20px; margin-bottom: 16px; color: #1e293b;">Generic Medications</h3>
+            <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 16px;">
+              <div style="color: #10b981; font-size: 30px; margin-bottom: 12px;">✓</div>
+              <ul style="margin: 0; padding-left: 20px; color: #64748b;">
+                <li style="margin-bottom: 8px;"><strong>Same active ingredient</strong> as brand-name</li>
+                <li style="margin-bottom: 8px;"><strong>FDA approved</strong> for safety and effectiveness</li>
+                <li style="margin-bottom: 8px;"><strong>Same dosage</strong> and strength</li>
+                <li style="margin-bottom: 8px;"><strong>80-85% cheaper</strong> than brand-name</li>
+              </ul>
+            </div>
+            <div style="background: #10b981; color: white; padding: 16px; border-radius: 8px; font-weight: 600; text-align: center;">
+              💰 Average cost: $10-20
+            </div>
+          </div>
+
+          <div>
+            <h3 style="font-size: 20px; margin-bottom: 16px; color: #1e293b;">Brand-Name Medications</h3>
+            <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 16px;">
+              <div style="color: #ef4444; font-size: 30px; margin-bottom: 12px;">$$$</div>
+              <ul style="margin: 0; padding-left: 20px; color: #64748b;">
+                <li style="margin-bottom: 8px;"><strong>Original version</strong> of the drug</li>
+                <li style="margin-bottom: 8px;"><strong>Marketed heavily</strong> to consumers</li>
+                <li style="margin-bottom: 8px;"><strong>Often no better</strong> than generic</li>
+                <li style="margin-bottom: 8px;"><strong>Much more expensive</strong> due to patent protection</li>
+              </ul>
+            </div>
+            <div style="background: #ef4444; color: white; padding: 16px; border-radius: 8px; font-weight: 600; text-align: center;">
+              💸 Average cost: $150-300+
+            </div>
+          </div>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; margin-top: 24px; border: 2px solid #10b981;">
+          <strong style="color: #065f46; font-size: 18px;">💡 Key Takeaway:</strong>
+          <p style="color: #475569; margin: 12px 0 0 0;">Generic medications are just as safe and effective as brand-name drugs but cost a fraction of the price. Always ask your doctor if a generic version is available!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- What is a Formulary -->
+    <div style="background: white; padding: 32px; border-radius: 12px; border: 2px solid #e2e8f0; margin: 40px 0;">
+      <h2 style="margin-bottom: 16px;">What is a Formulary?</h2>
+      <p style="color: #64748b; margin-bottom: 24px;">A <strong>formulary</strong> is your insurance plan's list of covered prescription drugs. It determines which medications are covered and how much you'll pay.</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="background: #f8fafc; padding: 20px; border-radius: 8px;">
+          <h3 style="font-size: 18px; margin-bottom: 12px; color: #1e293b;">✅ On Formulary</h3>
+          <p style="color: #64748b; font-size: 14px; margin-bottom: 12px;">Drugs listed on the formulary are covered by your insurance at the tier pricing.</p>
+          <div style="background: #d1fae5; color: #065f46; padding: 12px; border-radius: 6px; font-size: 13px;">
+            <strong>Example:</strong> Your antibiotic is Tier 1 → $10 copay
+          </div>
+        </div>
+
+        <div style="background: #f8fafc; padding: 20px; border-radius: 8px;">
+          <h3 style="font-size: 18px; margin-bottom: 12px; color: #1e293b;">❌ Not on Formulary</h3>
+          <p style="color: #64748b; font-size: 14px; margin-bottom: 12px;">Drugs NOT on the formulary may not be covered at all, or you'll pay full price.</p>
+          <div style="background: #fee2e2; color: #991b1b; padding: 12px; border-radius: 6px; font-size: 13px;">
+            <strong>Example:</strong> Brand-name drug not covered → $300 out-of-pocket
+          </div>
+        </div>
+      </div>
+
+      <div style="background: #e0e7ff; padding: 20px; border-radius: 8px; margin-top: 20px;">
+        <strong style="color: #4338ca;">💡 Pro Tip:</strong>
+        <p style="color: #475569; margin: 8px 0 0 0; font-size: 14px;">Before your doctor prescribes a medication, check your plan's formulary online or ask AIDed if it's covered. You can often request a cheaper alternative that works just as well.</p>
+      </div>
+    </div>
+
+    <!-- Real-World Example -->
+    <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 30px; border-radius: 12px; margin: 40px 0; border-left: 4px solid #f59e0b;">
+      <h3 style="font-size: 22px; margin-bottom: 16px;">💡 Real-World Example: Alex's Prescription</h3>
+      <p style="margin-bottom: 20px;"><strong>Situation:</strong> Alex's doctor prescribes a brand-name cholesterol medication (Lipitor) that costs $180/month.</p>
+      
+      <div style="display: grid; gap: 16px; margin-bottom: 20px;">
+        <div style="background: white; padding: 20px; border-radius: 8px;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">❌ Brand-Name Option: Lipitor</div>
+          <div style="color: #64748b; font-size: 14px;">Tier 4 (Non-Preferred Brand)</div>
+          <div style="color: #ef4444; font-size: 20px; font-weight: 700; margin-top: 8px;">$180/month</div>
+          <div style="color: #991b1b; font-size: 13px; margin-top: 4px;">= $2,160 per year</div>
+        </div>
+        
+        <div style="background: white; padding: 20px; border-radius: 8px; border: 2px solid #10b981;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">✅ Generic Option: Atorvastatin</div>
+          <div style="color: #64748b; font-size: 14px;">Tier 1 (Preferred Generic) - Same active ingredient!</div>
+          <div style="color: #10b981; font-size: 20px; font-weight: 700; margin-top: 8px;">$10/month</div>
+          <div style="color: #065f46; font-size: 13px; margin-top: 4px;">= $120 per year</div>
+        </div>
+      </div>
+
+      <div style="background: #10b981; color: white; padding: 20px; border-radius: 8px; text-align: center;">
+        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">💰 Alex's Annual Savings</div>
+        <div style="font-size: 36px; font-weight: 700;">$2,040</div>
+        <div style="font-size: 14px; margin-top: 8px;">Just by switching to the generic version!</div>
+      </div>
+    </div>
+
+    <!-- Money-Saving Strategies -->
+    <div class="content-section">
+      <h2>10 Ways to Save Money on Prescriptions</h2>
+      <div style="display: grid; gap: 16px; margin-top: 24px;">
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">1. Always ask for generic versions</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">Generics are FDA-approved and just as effective but cost 80-85% less.</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">2. Check your plan's formulary first</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">Before filling a prescription, verify it's covered and check the tier level.</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">3. Use mail-order pharmacy for maintenance medications</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">Get 90-day supplies for the price of 60 days through your insurance's mail service.</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">4. Compare prices at different pharmacies</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">GoodRx, Costco, and Walmart often have lower prices than traditional pharmacies.</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">5. Ask about patient assistance programs</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">Drug manufacturers often offer discounts or free medication for eligible patients.</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">6. Split higher-dose pills (if doctor approves)</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">A 20mg pill often costs the same as 10mg. Cut it in half and save 50%.</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">7. Use manufacturer coupons</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">Many brand-name drugs offer coupons on their websites that lower copays.</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">8. Request therapeutic alternatives</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">Ask your doctor if there's a similar medication in a lower tier that works equally well.</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">9. Don't automatically refill at the same pharmacy</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">Shop around each time—prices can vary significantly between pharmacies.</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #4F46E5;">
+          <div style="font-weight: 600; color: #1e293b; margin-bottom: 8px;">10. Ask AIDed for help!</div>
+          <p style="color: #64748b; margin: 0; font-size: 14px;">AIDed can check your formulary, find lower-cost alternatives, and verify coverage.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- How AIDed Helps -->
+    <div style="background: linear-gradient(135deg, #e0e7ff, #c7d2fe); padding: 30px; border-radius: 12px; margin: 40px 0; border: 2px solid #4F46E5;">
+      <h3 style="font-size: 22px; margin-bottom: 16px; color: #1e293b;">🤖 How AIDed Can Help with Prescriptions</h3>
+      <p style="color: #475569; margin-bottom: 20px;">AIDed can answer questions about your prescription coverage:</p>
+      <div style="display: grid; gap: 12px;">
+        <div style="background: white; padding: 16px; border-radius: 8px;">
+          <strong style="color: #4F46E5;">Ask AIDed:</strong> <span style="color: #64748b;">"Is [medication name] covered by my insurance?"</span>
+        </div>
+        <div style="background: white; padding: 16px; border-radius: 8px;">
+          <strong style="color: #4F46E5;">Ask AIDed:</strong> <span style="color: #64748b;">"What's the copay for [medication] on my plan?"</span>
+        </div>
+        <div style="background: white; padding: 16px; border-radius: 8px;">
+          <strong style="color: #4F46E5;">Ask AIDed:</strong> <span style="color: #64748b;">"Is there a generic version of [brand-name drug]?"</span>
+        </div>
+        <div style="background: white; padding: 16px; border-radius: 8px;">
+          <strong style="color: #4F46E5;">Ask AIDed:</strong> <span style="color: #64748b;">"Where can I find my plan's formulary?"</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 50px; padding-top: 30px; border-top: 2px solid #e2e8f0;">
+      <a href="module3.html" class="btn ghost">← Previous Module</a>
+      <a href="course.html" class="btn ghost">Back to Course</a>
+      <a href="module5.html" class="btn primary">Next Module →</a>
+    </div>
+  </main>
+
+  <footer class="wrap footer">
+    <div class="muted small">
+      AIDed © 2026 - Educational tool for health insurance literacy. Not medical advice.
+    </div>
+  </footer>
+</body>
+</html>
