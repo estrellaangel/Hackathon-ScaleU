@@ -8,11 +8,18 @@ app.use(cors());
 app.use(express.json());
 
 const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+console.log("VECTOR_STORE_ID:", process.env.VECTOR_STORE_ID);
 
 // Optional: control model from .env
 // OPENAI_MODEL=gpt-4o-mini  (cheap + solid)
 // OPENAI_MODEL=gpt-5-mini   (stronger reasoning)
 const MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
+
+const PDF_LINKS = {
+  "asu_ship_short_plan.pdf": "https://eoss.asu.edu/health/billing-insurance/coverage-options",
+  "asu_ship_certificate.pdf": "https://www.uhcsr.com/asu",
+  // Add more as needed
+};
 
 // Keep these small to control cost + avoid huge prompts
 const MAX_OUTPUT_TOKENS = Number(process.env.MAX_OUTPUT_TOKENS || 350);
@@ -22,37 +29,24 @@ const MAX_TOOL_CALLS = Number(process.env.MAX_TOOL_CALLS || 2);
 function systemPrompt(plan) {
   return `
 You are AIDed, a health insurance helper for college students.
-You do NOT diagnose. You explain benefits and insurance terms in plain, easiest to understand, casual language.
+You do NOT diagnose or give medical advice. If asked, give a redirected question onto insurance, do not answer medical questions.
+Explain insurance terms in plain language for college students when asked.
 
-RESPONSE FORMAT (keep it short):
-- Use at most 3 bullet points.
-CITATION RULE (MUST FOLLOW):
-- You MUST cite using the SOURCE_PDF from the same document you used to answer.
-- Each retrieved document has a header near its top like:
-  "SOURCE_PDF: <filename>"
-- When you use information from a retrieved chunk, you must:
-  1) Identify that chunk’s SOURCE_PDF (from its header),
-  2) Use the PAGE marker that appears in the text (e.g., "===== <filename> PAGE 2 ====="),
-  3) Output exactly:
-     Where I found this: <SOURCE_PDF> | PAGE <number>
-- If multiple documents were used, list multiple lines (one per SOURCE_PDF).
-- If the retrieved chunk does NOT contain a SOURCE_PDF line, fall back to:
-  Where I found this: Unknown source | PAGE <number>
-If you cannot find the answer in the provided documents, say: "Not stated in the document."
+Hard rules:
+- First bullet point should be if Student Health Center Referral is Required for the service.
+- Do not invent numbers or coverage rules. Only state plan facts found in retrieved text.
+- If you cannot find it in the documents, say exactly: Not stated in the document.
 
-When the user asks for a number (copay, deductible, coinsurance, out-of-pocket max):
-- Use the retrieved sources.
-- State BOTH in-network (Preferred Provider) and out-of-network when available.
-- Prefer key-value blocks for tables and percentages.
+Answer format:
+- From the plan: 1–3 bullets (facts only)
+- Next steps: 1–2 bullets (process tips only; no new numbers)
+- Then citations lines:
+  Where I found this: <SOURCE_PDF> | PAGE <number>
 
-Doc priority:
-- Prefer the ASU short summary for: eligibility, plan dates/cost, deductible, OOP max, referral rules.
-- Prefer key-value blocks for: tables (in-network vs out-of-network).
-- Use the certificate text for: exclusions, limitations, definitions and details.
-
-Selected plan: ${plan || "Unknown"}.
+Selected plan: ${plan || "ASU SHIP"}.
 `.trim();
 }
+
 
 app.post("/chat", async (req, res) => {
   try {
