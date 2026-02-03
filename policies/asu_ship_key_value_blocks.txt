@@ -1,0 +1,315 @@
+DOC_TYPE: KEY-VALUE BENEFITS
+SOURCE_PDF: asu_ship_certificate.pdf
+SOURCE_LINK: https://www.uhcsr.com/asu
+
+Note: “In-network” corresponds to “Preferred Provider Benefits”
+
+==== SOURCE_PDF: asu_ship_certificate.pdf | PAGE 35 (extracted section prior to PAGE 36 marker) =====
+
+INPATIENT
+
+Room and Board Expense
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Intensive Care
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Hospital Miscellaneous Expenses
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Routine Newborn Care
+- In-network (Preferred Provider): 80% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount (not subject to Deductible)
+
+Surgery
+- Notes: If two or more procedures are performed through the same incision or in immediate succession at the same operative session, the maximum amount paid will not exceed 50% of the second procedure and 50% of all subsequent procedures.
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Assistant Surgeon Fees
+- Notes: If two or more procedures are performed through the same incision or in immediate succession at the same operative session, the maximum amount paid will not exceed 50% of the second procedure and 50% of all subsequent procedures.
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Anesthetist Services
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Registered Nurse's Services
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Physician's Visits (Inpatient)
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Pre-admission Testing
+- Notes: Payable within 7 working days prior to admission.
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+
+OUTPATIENT (section prior to PAGE 36 marker)
+
+Surgery (Outpatient)
+- Notes: If two or more procedures are performed through the same incision or in immediate succession at the same operative session, the maximum amount paid will not exceed 50% of the second procedure and 50% of all subsequent procedures.
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Day Surgery Miscellaneous
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Assistant Surgeon Fees (Outpatient)
+- Notes: If two or more procedures are performed through the same incision or in immediate succession at the same operative session, the maximum amount paid will not exceed 50% of the second procedure and 50% of all subsequent procedures.
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Anesthetist Services (Outpatient)
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+
+==== SOURCE_PDF: asu_ship_certificate.pdf | PAGE 36 =====
+
+OUTPATIENT
+
+Physician's Visits (Outpatient)
+- In-network (Preferred Provider): $25 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Physiotherapy
+- In-network (Preferred Provider): $25 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Medical Emergency Expenses
+- Notes: The Copay will be waived if admitted to the Hospital.
+- In-network (Preferred Provider): $200 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: $200 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+
+Diagnostic X-ray Services
+- In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Radiation Therapy
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Laboratory Procedures
+- In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Tests & Procedures
+- In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Injections
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Chemotherapy
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+
+PRESCRIPTION DRUGS (corrected to match table layout)
+
+Prescription Drugs (general)
+- Notes:
+  - See UHCP Prescription Drug Benefit Endorsement for additional information.
+  - Prescription Drugs and contraceptives covered under the Preventive Care Services benefit will be paid at the benefit level shown under Preventive Care Services.
+
+UnitedHealthcare Pharmacy (UHCP) — Retail Network Pharmacy (In-network / Preferred Provider)
+- $125 Prescription Drug Deductible (per Policy Year) does not apply to Policy Deductible
+- $15 Copay per prescription (Tier 1)
+- $40 Copay per prescription (Tier 2)
+- $80 Copay per prescription (Tier 3)
+- Up to a 31-day supply per prescription
+- Specialty note: When Specialty Prescription Drugs are dispensed at a Non-Preferred Specialty Network Pharmacy, the Insured is required to pay 2 times the retail Copay (up to 50% of the Prescription Drug Charge).
+
+UHCP Mail Order Network Pharmacy or Preferred 90 Day Retail Network Pharmacy (In-network / Preferred Provider)
+- Cost: 2.5 times the retail Copay
+- Supply: up to a 90-day supply
+
+Prescription Drugs (Out-of-network Provider Benefits)
+- $125 Prescription Drug Deductible (per Policy Year) does not apply to Policy Deductible
+- $15 Copay per prescription (generic drug)
+- $40 Copay per prescription (brand-name drug)
+- 100% of billed charge
+- Up to a 31-day supply per prescription
+
+
+OTHER
+
+Ambulance Services
+- In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 100% of Allowed Amount (not subject to Deductible)
+
+Durable Medical Equipment
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Consultant Physician Fees
+- In-network (Preferred Provider): $25 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Dental Treatment (Injury to Sound, Natural Teeth only)
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: Paid under the Preferred Provider Benefit
+
+Dental Treatment (removal of impacted wisdom teeth only; includes exam and x-rays)
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: Paid under the Preferred Provider Benefit
+
+
+==== SOURCE_PDF: asu_ship_certificate.pdf | PAGE 37 =====
+
+OTHER
+
+Mental Illness Treatment
+- Inpatient:
+  - In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+  - Out-of-network: 50% of Allowed Amount after Deductible
+- Outpatient office visits:
+  - In-network (Preferred Provider): $25 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+  - Out-of-network: 50% of Allowed Amount after Deductible
+- All other outpatient services (including partial hospitalization), except Medical Emergency Expenses and Prescription Drugs:
+  - In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+  - Out-of-network: 50% of Allowed Amount after Deductible
+
+Substance Use Disorder Treatment
+- Inpatient:
+  - In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+  - Out-of-network: 50% of Allowed Amount after Deductible
+- Outpatient office visits:
+  - In-network (Preferred Provider): $25 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+  - Out-of-network: 50% of Allowed Amount after Deductible
+- All other outpatient services (including partial hospitalization), except Medical Emergency Expenses and Prescription Drugs:
+  - In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+  - Out-of-network: 50% of Allowed Amount after Deductible
+
+Maternity
+- In-network (Preferred Provider): Paid as any other Sickness
+- Out-of-network: Paid as any other Sickness
+
+Complications of Pregnancy
+- In-network (Preferred Provider): Paid as any other Sickness
+- Out-of-network: Paid as any other Sickness
+
+Preventive Care Services
+- Notes: No Deductible, Copays, or Coinsurance will be applied when the services are received from a Preferred Provider.
+- In-network (Preferred Provider): 100% of Allowed Amount
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Home Health Care
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Hospice Care
+- In-network (Preferred Provider): 100% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Inpatient Rehabilitation Facility
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Skilled Nursing Facility
+- Notes: 90 days maximum per Policy Year
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Urgent Care Center
+- In-network (Preferred Provider): $25 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Hospital Outpatient Facility or Clinic
+- In-network (Preferred Provider): 100% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+
+==== SOURCE_PDF: asu_ship_certificate.pdf | PAGE 38 =====
+
+OTHER
+
+Allergy Injections
+- In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Hearing Aids
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Medical Supplies
+- Notes: Benefits are limited to a 31-day supply per purchase.
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Ostomy Supplies
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Prostate Screening
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Routine Physicals/Well Visits
+- Notes: Benefits for services not otherwise covered under Preventive Care Services.
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Wigs
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Electrolysis of face and neck (gender reassignment treatment)
+- Notes: $750 Maximum. Does not apply to Policy Deductible and Policy Out-of-Pocket Maximum.
+- In-network (Preferred Provider): 80% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 80% of Allowed Amount (not subject to Deductible)
+
+Tracheal Shave (gender reassignment treatment)
+- Notes: Does not apply to Policy Deductible and Policy Out-of-Pocket Maximum.
+- In-network (Preferred Provider): 80% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 80% of Allowed Amount (not subject to Deductible)
+
+Hearing Exam
+- Notes: Benefits are limited to 1 hearing exam per Policy Year.
+- In-network (Preferred Provider): $25 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Outpatient Private Duty Nursing
+- In-network (Preferred Provider): 80% of Allowed Amount after Deductible
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Adult Routine Vision Exam
+- Notes: Benefits include refraction and glaucoma testing and are limited to 1 routine vision exam per Policy Year.
+- In-network (Preferred Provider): $25 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: $25 Copay per visit; 100% of Allowed Amount (not subject to Deductible)
+
+Walk-In Clinic Visits (Non-Emergency visits)
+- In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+
+==== SOURCE_PDF: asu_ship_certificate.pdf | PAGE 39 =====
+
+OTHER
+
+Transplantation Services — Travel and Lodging Expenses
+- In-network (Preferred Provider): $50 per night; $10,000 lifetime maximum per transplant
+- Out-of-network: $50 per night; $10,000 lifetime maximum per transplant
+
+Titers Labs
+- In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+Travel Vaccines
+- In-network (Preferred Provider): 100% of Allowed Amount (not subject to Deductible)
+- Out-of-network: 50% of Allowed Amount after Deductible
+
+
+==== SOURCE_PDF: asu_ship_certificate.pdf | PAGE 40 =====
+
+(continued in source document)

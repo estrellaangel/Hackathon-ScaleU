@@ -13,14 +13,7 @@ An attractive and responsive front-end interface for a health insurance AI chatb
 
 ## Insurance Providers Included
 
-1. Blue Cross Blue Shield
-2. UnitedHealthcare
-3. Aetna
-4. Cigna
-5. Humana
-6. Kaiser Permanente
-7. Anthem
-8. Medicare
+1. ASU Insurance plan
 
 ## File Structure
 
@@ -45,72 +38,6 @@ An attractive and responsive front-end interface for a health insurance AI chatb
    - Type messages in the input box
    - Click suggested questions for quick queries
    - The chatbot placeholder is ready for your AI integration
-
-## Chatbot Integration Guide
-
-### Method 1: Direct Integration in script.js
-
-Replace the `generateBotResponse()` function in `script.js` with your AI API call:
-
-```javascript
-async function generateBotResponse(userMessage) {
-    try {
-        const response = await fetch('YOUR_AI_API_ENDPOINT', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer YOUR_API_KEY'
-            },
-            body: JSON.stringify({
-                message: userMessage,
-                insurance: selectedInsurance,
-                context: 'health_insurance'
-            })
-        });
-        
-        const data = await response.json();
-        return data.message;
-    } catch (error) {
-        console.error('Error:', error);
-        return 'Sorry, I encountered an error. Please try again.';
-    }
-}
-```
-
-### Method 2: Using the Exposed API
-
-The application exposes a global API for chatbot integration:
-
-```javascript
-// Add a bot message from your chatbot
-window.HealthInsuranceChat.addBotMessage('Your AI response here');
-
-// Add a user message programmatically
-window.HealthInsuranceChat.addUserMessage('User query');
-
-// Get current insurance selection
-const insurance = window.HealthInsuranceChat.selectedInsurance();
-console.log(insurance); // { name: "Blue Cross Blue Shield", type: "blue-cross" }
-```
-
-### Method 3: Embed Third-Party Chatbot Widget
-
-To embed a third-party chatbot (like Dialogflow, Rasa, etc.):
-
-1. Replace the chat container in `index.html`:
-```html
-<div class="chat-container" id="chatContainer">
-    <!-- Your chatbot embed code here -->
-    <iframe src="YOUR_CHATBOT_URL" style="width: 100%; height: 100%; border: none;"></iframe>
-</div>
-```
-
-2. Hide the chat input if your embedded chatbot has its own:
-```css
-.chat-input-container {
-    display: none;
-}
-```
 
 ## Customization
 

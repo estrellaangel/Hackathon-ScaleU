@@ -9,18 +9,12 @@ const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
 const resetChatBtn = document.getElementById("resetChatBtn");
 
-// Insurance selection handler
-insuranceOptions.forEach(option => {
-  option.addEventListener("click", () => {
-    insuranceOptions.forEach(opt => opt.classList.remove("selected"));
-    option.classList.add("selected");
-    const plan = option.dataset.plan;
-    selectedPlanText.textContent = plan;
-    planPill.textContent = `Plan: ${plan}`;
-    addMessage(`Great! I see you've selected ${plan}. How can I help you today with your health insurance needs?`, "bot");
-  });
-});
+// If your submit button exists, this will find it automatically
+const sendBtn = chatForm ? chatForm.querySelector('button[type="submit"], input[type="submit"]') : null;
 
+// ---------------------------
+// Helpers
+// ---------------------------
 function addMessage(text, who = "bot") {
   const div = document.createElement("div");
   div.className = "msg" + (who === "you" ? " you" : "");
@@ -61,6 +55,31 @@ function updatePlanUI() {
   planPill.textContent = `Plan: ${p || "Not selected"}`;
 }
 
+// ---------------------------
+// Insurance selection handler
+// (prevents re-adding the same “selected plan” message over and over)
+// ---------------------------
+let lastPlanAnnounced = "";
+
+insuranceOptions.forEach(option => {
+  option.addEventListener("click", () => {
+    insuranceOptions.forEach(opt => opt.classList.remove("selected"));
+    option.classList.add("selected");
+
+    const plan = option.dataset.plan;
+    selectedPlanText.textContent = plan;
+    planPill.textContent = `Plan: ${plan}`;
+
+    if (plan && plan !== lastPlanAnnounced) {
+      lastPlanAnnounced = plan;
+      addMessage(
+        `Great! I see you've selected ${plan}. How can I help you today with your health insurance needs?`,
+        "bot"
+      );
+    }
+  });
+});
+
 // Keep old select handler for backwards compatibility
 if (planSelect) {
   planSelect.addEventListener("change", updatePlanUI);
@@ -88,19 +107,83 @@ if (resetChatBtn) {
   resetChatBtn.addEventListener("click", boot);
 }
 
-chatForm.addEventListener("submit", (e) => {
+// ---------------------------
+// Chat submit handler (REAL backend call)
+// Adds: inFlight lock + cooldown + better error handling
+// ---------------------------
+let inFlight = false;
+let lastSubmitAt = 0;
+
+const API_URL = "http://localhost:3000/chat";
+const COOLDOWN_MS = 1200;
+
+chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const text = chatInput.value.trim();
   if (!text) return;
+
+  // Cooldown to prevent rapid spam clicks
+  const now = Date.now();
+  if (now - lastSubmitAt < COOLDOWN_MS) {
+    addMessage("One sec — sending too fast. Try again in a moment.", "bot");
+    return;
+  }
+  lastSubmitAt = now;
+
+  // Prevent double-submit while request is running
+  if (inFlight) return;
+  inFlight = true;
+  if (sendBtn) sendBtn.disabled = true;
 
   addMessage(text, "you");
   chatInput.value = "";
 
   const plan = getPlan();
-  const response = fakeBotResponse(text, plan);
-  setTimeout(() => addMessage(response, "bot"), 350);
+
+  try {
+    const r = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: text, plan })
+    });
+
+    // Try to parse JSON safely (even if server returns non-JSON)
+    let data = {};
+    const contentType = r.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      data = await r.json();
+    } else {
+      const t = await r.text();
+      data = { error: t };
+    }
+
+    // Handle backend 429 (your server may return this if OpenAI rate/quota is hit)
+    if (r.status === 429) {
+      addMessage(
+        data.error ||
+          "We hit a rate/quota limit. If this is OpenAI quota, check billing/usage; otherwise slow down requests.",
+        "bot"
+      );
+      return;
+    }
+
+    // Handle other server errors
+    if (!r.ok) {
+      addMessage(data.error || `Server error (${r.status}).`, "bot");
+      return;
+    }
+
+    addMessage(data.answer || "No response.", "bot");
+  } catch (err) {
+    addMessage("Server error. Is the backend running?", "bot");
+  } finally {
+    inFlight = false;
+    if (sendBtn) sendBtn.disabled = false;
+  }
 });
 
+// Keep fakeBotResponse if you still want it as fallback, otherwise remove it.
 function fakeBotResponse(userText, plan) {
   const p = plan ? `Under "${plan}",` : "If you select your plan,";
   const lower = userText.toLowerCase();
