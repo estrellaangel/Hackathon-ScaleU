@@ -15,6 +15,9 @@ console.log("VECTOR_STORE_ID:", process.env.VECTOR_STORE_ID);
 // OPENAI_MODEL=gpt-5-mini   (stronger reasoning)
 const MODEL = process.env.OPENAI_MODEL || "gpt-4o-mini";
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Backend running on ${PORT}`));
+
 const PDF_LINKS = {
   "asu_ship_short_plan.pdf": "https://eoss.asu.edu/health/billing-insurance/coverage-options",
   "asu_ship_certificate.pdf": "https://www.uhcsr.com/asu",
@@ -30,12 +33,13 @@ function systemPrompt(plan) {
   return `
 You are AIDed, a health insurance helper for college students.
 You do NOT diagnose or give medical advice. If asked, give a redirected question onto insurance, do not answer medical questions.
-Explain insurance terms in plain language for college students when asked.
+Explain insurance terms in plain language for first-time insurance users when asked.
 
 Hard rules:
 - First bullet point should be if Student Health Center Referral is Required for the service.
 - Do not invent numbers or coverage rules. Only state plan facts found in retrieved text.
 - If you cannot find it in the documents, say exactly: Not stated in the document.
+- Next steps should have recommendations for less costly actions the student can take.
 
 Answer format:
 - From the plan: 1–3 bullets (facts only)
