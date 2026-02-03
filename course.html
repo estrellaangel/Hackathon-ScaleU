@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health Literacy Course - AIDed</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .course-page { padding: 40px 0; }
+    .course-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(99, 102, 241, 0.05));
+      border-radius: 20px;
+    }
+    .course-header h1 {
+      font-size: 42px;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .course-header p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .course-grid { 
+      margin-top: 30px; 
+      display: grid; 
+      gap: 20px; 
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    }
+    .module-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .module-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), #6366f1);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .module-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(79, 70, 229, 0.15);
+      transform: translateY(-4px);
+    }
+    .module-card:hover::before {
+      transform: scaleX(1);
+    }
+    .module-number {
+      font-size: 48px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    .module-card h3 {
+      margin: 12px 0;
+      font-size: 22px;
+      color: var(--text);
+    }
+    .module-card p {
+      margin: 12px 0;
+      line-height: 1.6;
+    }
+    .module-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .duration {
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 500;
+    }
+    .back-nav {
+      margin-bottom: 20px;
+    }
+    .back-nav a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    .back-nav a:hover {
+      color: var(--accent);
+      transform: translateX(-4px);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>
+          <div class="brand-name">AIDed</div>
+          <div class="brand-sub">Your health insurance companion</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#assistant">Assistant</a>
+        <a href="course.html">Health Literacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap course-page">
+    <div class="back-nav">
+      <a href="index.html">← Back to Home</a>
+    </div>
+
+    <div class="course-header">
+      <h1>Health Literacy Course</h1>
+      <p>
+        Essential knowledge every college student should have about healthcare and insurance.
+        Learn at your own pace and become confident in managing your health coverage.
+      </p>
+    </div>
+
+    <div class="course-grid">
+      <div class="module-card">
+        <div class="module-number">01</div>
+        <h3>Understanding Your Insurance</h3>
+        <p class="muted">
+          Master the fundamentals of health insurance including deductibles, copays, coinsurance, 
+          and the critical differences between in-network and out-of-network providers. 
+          Learn how to read your insurance card and understand your coverage limits.
+        </p>
+        <div class="module-meta">
+          <span class="duration">⏱ 15 min</span>
+          <button class="btn primary small">Start Module</button>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">02</div>
+        <h3>When to Seek Care</h3>
+        <p class="muted">
+          Know when to call for an appointment, visit urgent care, or go to the emergency room. 
+          Understand the differences between emergency, urgent, primary, and preventive care, 
+          and learn how choosing the right care setting can save you money.
+        </p>
+        <div class="module-meta">
+          <span class="duration">⏱ 12 min</span>
+          <button class="btn primary small">Start Module</button>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">03</div>
+        <h3>Telehealth & Virtual Care</h3>
+        <p class="muted">
+          Discover how to use telemedicine effectively for common health issues like colds, 
+          skin conditions, and mental health consultations. Learn which conditions are best 
+          treated virtually and how to save money while receiving quality care.
+        </p>
+        <div class="module-meta">
+          <span class="duration">⏱ 10 min</span>
+          <button class="btn primary small">Start Module</button>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">04</div>
+        <h3>Prescription Coverage</h3>
+        <p class="muted">
+          Navigate the complex world of prescription drug coverage. Understand drug tiers, 
+          formularies, generic vs brand-name medications, and strategies to reduce your 
+          out-of-pocket costs for medications.
+        </p>
+        <div class="module-meta">
+          <span class="duration">⏱ 10 min</span>
+          <button class="btn primary small">Start Module</button>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">05</div>
+        <h3>Avoiding Surprise Bills</h3>
+        <p class="muted">
+          Learn the critical questions to ask healthcare providers before receiving care. 
+          Understand how to verify coverage, get cost estimates, and protect yourself from 
+          unexpected medical charges. Know your rights under the No Surprises Act.
+        </p>
+        <div class="module-meta">
+          <span class="duration">⏱ 12 min</span>
+          <button class="btn primary small">Start Module</button>
+        </div>
+      </div>
+
+      <div class="module-card">
+        <div class="module-number">06</div>
+        <h3>Mental Health Resources</h3>
+        <p class="muted">
+          Access counseling, therapy, and mental health support through your insurance. 
+          Learn about confidentiality, finding the right provider, and navigating mental 
+          health coverage including teletherapy options.
+        </p>
+        <div class="module-meta">
+          <span class="duration">⏱ 15 min</span>
+          <button class="btn primary small">Start Module</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top: 40px; text-align: center; padding: 30px;">
+      <h2>Ready to Get Personalized Guidance?</h2>
+      <p class="muted">Use our AI assistant to get answers specific to your insurance plan.</p>
+      <a href="index.html#assistant" class="btn primary" style="margin-top: 16px;">Go to AI Assistant</a>
+    </div>
+  </main>
+
+  <footer class="wrap footer">
+    <div class="muted small">
+      AIDed © 2026 - Educational tool for health insurance literacy. Not medical advice.
+    </div>
+  </footer>
+
+  <script>
+    // Add active state to nav
+    document.querySelectorAll('.nav a').forEach(link => {
+      if (link.getAttribute('href') === 'course.html') {
+        link.style.background = 'rgba(79, 70, 229, 0.1)';
+        link.style.color = 'var(--accent)';
+      }
+    });
+  </script>
+</body>
+</html>

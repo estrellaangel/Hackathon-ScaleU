@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIDed - Health Insurance Assistant</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <div class="brand">
+        <div class="logo">A</div>
+        <div>
+          <div class="brand-name">AIDed</div>
+          <div class="brand-sub">Your health insurance companion</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="#assistant">Assistant</a>
+        <a href="course.html">Health Literacy</a>
+        <span class="pill" id="planPill">Plan: Not selected</span>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-left">
+        <h1>Navigate healthcare with confidence</h1>
+        <p class="muted">
+          AIDed helps college students understand their health insurance, make informed decisions, and learn essential health literacy skills.
+          Get personalized guidance on coverage, costs, and your best care options.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn primary" href="#assistant">Get Started</a>
+          <a class="btn" href="course.html">Health Literacy Course</a>
+        </div>
+
+        <div class="note">
+          Emergency note: If symptoms are severe or sudden, seek urgent medical care immediately.
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="card preview">
+          <div class="label">Preview</div>
+          <div class="title">Plan-aware guidance</div>
+
+          <div class="steps">
+            <div class="step">
+              <div class="step-label">Step 1</div>
+              <div class="step-title">Pick your plan</div>
+              <div class="step-text">So advice matches what is covered.</div>
+            </div>
+            <div class="step">
+              <div class="step-label">Step 2</div>
+              <div class="step-title">Describe your situation</div>
+              <div class="step-text">Visit type, symptoms, prescriptions, etc.</div>
+            </div>
+            <div class="step">
+              <div class="step-label">Step 3</div>
+              <div class="step-title">See options + savings</div>
+              <div class="step-text">Telehealth vs clinic vs urgent care vs ER.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="assistant" class="prototype">
+      <div class="section-head">
+        <h2>AI Assistant</h2>
+        <p class="muted">
+          Select your insurance plan and get personalized guidance on coverage and healthcare options.
+        </p>
+      </div>
+
+      <div class="grid">
+        <aside class="sidebar-insurance">
+          <div class="card sidebar-card">
+            <div class="card-head">
+              <div>
+                <div class="card-title"><i class="fas fa-shield-alt"></i> Your Insurance</div>
+                <div class="muted small">Select your health insurance plan</div>
+              </div>
+            </div>
+
+            <div class="insurance-slider">
+              <div class="insurance-option" data-plan="Blue Cross Blue Shield">
+                <div class="insurance-icon" style="background: linear-gradient(135deg, #0066CC, #003D99);">
+                  <span>BC</span>
+                </div>
+                <div class="insurance-details">
+                  <h4>Blue Cross Blue Shield</h4>
+                  <p>Comprehensive nationwide coverage</p>
+                </div>
+              </div>
+
+              <div class="insurance-option" data-plan="UnitedHealthcare">
+                <div class="insurance-icon" style="background: linear-gradient(135deg, #002677, #001A52);">
+                  <span>UH</span>
+                </div>
+                <div class="insurance-details">
+                  <h4>UnitedHealthcare</h4>
+                  <p>Premium flexible plans</p>
+                </div>
+              </div>
+
+              <div class="insurance-option" data-plan="Aetna">
+                <div class="insurance-icon" style="background: linear-gradient(135deg, #7D3F98, #5A2C70);">
+                  <span>AE</span>
+                </div>
+                <div class="insurance-details">
+                  <h4>Aetna</h4>
+                  <p>Quality care network</p>
+                </div>
+              </div>
+
+              <div class="insurance-option" data-plan="Cigna">
+                <div class="insurance-icon" style="background: linear-gradient(135deg, #D6006D, #A30054);">
+                  <span>CI</span>
+                </div>
+                <div class="insurance-details">
+                  <h4>Cigna</h4>
+                  <p>Global health services</p>
+                </div>
+              </div>
+
+              <div class="insurance-option" data-plan="Humana">
+                <div class="insurance-icon" style="background: linear-gradient(135deg, #00A758, #007A3E);">
+                  <span>HU</span>
+                </div>
+                <div class="insurance-details">
+                  <h4>Humana</h4>
+                  <p>Wellness-focused plans</p>
+                </div>
+              </div>
+
+              <div class="insurance-option" data-plan="Kaiser Permanente">
+                <div class="insurance-icon" style="background: linear-gradient(135deg, #0061B2, #004680);">
+                  <span>KP</span>
+                </div>
+                <div class="insurance-details">
+                  <h4>Kaiser Permanente</h4>
+                  <p>Integrated healthcare</p>
+                </div>
+              </div>
+
+              <div class="insurance-option" data-plan="Anthem">
+                <div class="insurance-icon" style="background: linear-gradient(135deg, #004E9E, #003671);">
+                  <span>AN</span>
+                </div>
+                <div class="insurance-details">
+                  <h4>Anthem</h4>
+                  <p>Trusted benefits</p>
+                </div>
+              </div>
+
+              <div class="insurance-option" data-plan="ASU Student Health">
+                <div class="insurance-icon" style="background: linear-gradient(135deg, #8C1D40, #5C0F2A);">
+                  <span>ASU</span>
+                </div>
+                <div class="insurance-details">
+                  <h4>ASU Student Health</h4>
+                  <p>Campus health coverage</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mini">
+              <div class="mini-row">
+                <div class="mini-label">Selected Plan</div>
+                <div class="mini-value" id="selectedPlanText">None</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">💡 Money Saver Tips</div>
+            <ul class="list">
+              <li>Check in-network status before booking</li>
+              <li>Telehealth is often cheaper for common issues</li>
+              <li>Know deductible vs copay differences</li>
+              <li>Ask for itemized bills if charges look wrong</li>
+              <li>Use campus resources when available</li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="col-right">
+          <div class="chat card">
+            <div class="chat-head">
+              <div>
+                <div class="card-title">Chat</div>
+                <div class="muted small">Ask about coverage, costs, and best options under your plan.</div>
+              </div>
+
+              <div class="chat-actions">
+                <button class="btn ghost" id="resetChatBtn">Reset</button>
+              </div>
+            </div>
+
+            <div class="quick">
+              <button class="chip" data-prompt="I need care for a sore throat. What is my cheapest option?">Sore throat</button>
+              <button class="chip" data-prompt="Is telehealth covered and when should I use it?">Telehealth</button>
+              <button class="chip" data-prompt="I think I need urgent care. What will it likely cost under my plan?">Urgent care cost</button>
+              <button class="chip" data-prompt="What should I ask before getting a lab test so I do not get surprise bills?">Avoid surprise bills</button>
+            </div>
+
+            <div class="messages" id="messages">
+              <!-- Messages render here -->
+            </div>
+
+            <form class="composer" id="chatForm">
+              <input id="chatInput" type="text" placeholder="Type your question..." autocomplete="off" />
+              <button class="btn primary" type="submit">Send</button>
+            </form>
+
+            <div class="muted small chat-foot">
+              Prototype mode: this uses a fake response generator. Your teammate can connect real chatbot later.
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="features" class="features">
+      <div class="section-head">
+        <h2>Features</h2>
+        <p class="muted">What judges should understand in 10 seconds.</p>
+      </div>
+
+      <div class="tiles">
+        <div class="tile">
+          <div class="tile-title">Coverage clarity</div>
+          <div class="muted">Explain what is covered vs not in plain language.</div>
+        </div>
+        <div class="tile">
+          <div class="tile-title">Best next steps</div>
+          <div class="muted">Telehealth vs clinic vs urgent care vs ER guidance.</div>
+        </div>
+        <div class="tile">
+          <div class="tile-title">Cost saving tips</div>
+          <div class="muted">Cheaper options and common cost traps.</div>
+        </div>
+        <div class="tile">
+          <div class="tile-title">Plan aware</div>
+          <div class="muted">Answers change based on the selected plan.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="how">
+      <div class="card">
+        <h2>About AIDed</h2>
+        <p class="muted">
+          AIDed empowers college students to navigate the complex world of health insurance with confidence.
+          Combine our AI assistant with comprehensive health literacy courses to make informed healthcare decisions,
+          save money, and access the care you need. This educational tool does not diagnose conditions but helps you
+          understand your coverage and options.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <div class="muted small">
+      AIDed © 2026 - Educational tool for health insurance literacy. Not medical advice.
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
