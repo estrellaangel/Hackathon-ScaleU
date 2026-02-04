@@ -445,6 +445,78 @@ input:disabled, select:disabled{
   outline-offset: 2px;
 }
 
+.choice-btn {
+  border: 1px solid rgba(0,0,0,0.12);
+  background: white;
+  padding: 10px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.choice-btn:hover { opacity: 0.9; }
+
+.choice-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* optional - only if you later add a class for headings */
+.protocol-heading { font-weight: 700; }
+
+.term-link {
+  font-weight: 700;
+  color: #1d4ed8; /* blue */
+  cursor: pointer;
+}
+
+.term-link:hover {
+  text-decoration: underline;
+}
+
+.choice-cards {
+  margin-top: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+.choice-card {
+  width: 100%;
+  text-align: left;
+  border: 1px solid #224cbe;
+  border-radius: 14px;
+  padding: 14px 14px;
+  background: #bcc9ee1d;
+  cursor: pointer;
+  transition: transform 0.08s ease, background 0.12s ease, border 0.12s ease;
+}
+
+.choice-card:hover {
+  transform: translateY(-1px);
+  /* background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.25); */
+  font-weight: bolder;
+}
+
+.choice-card:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.choice-card.picked {
+  border-color: rgba(120, 200, 255, 0.8);
+  background: rgba(120, 200, 255, 0.15);
+}
+
+.choice-card-body b {
+  font-weight: 700;
+}
+
+.choice-card-body {
+  line-height: 1.35;
+  font-size: 0.95rem;
+}
+
 
 /* ---------------------------
    Features tiles
@@ -468,6 +540,8 @@ input:disabled, select:disabled{
 
 .how { padding: 26px 0 50px; }
 .footer { padding: 22px 18px 40px; text-align: center; }
+
+
 
 /* ---------------------------
    Responsive

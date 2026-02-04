@@ -48,7 +48,7 @@ const MAX_TOOL_CALLS = Number(process.env.MAX_TOOL_CALLS || 2);
 // ---------------------------
 // Prompt
 // ---------------------------
-function systemPrompt(plan) {
+function systemPrompt(plan, forceCitations = false) {
   return `
 You are AIDed, a health insurance helper for college students.
 You do NOT diagnose or give medical advice. If asked, redirect back to insurance questions and resources.
@@ -65,9 +65,15 @@ Answer format:
 <b>From the plan:</b> 1–3 bullets (facts only)
 <b>Next steps:</b> 1–2 bullets (process tips only; no new numbers)
 - Then citations lines:
-  Where I found this: <SOURCE_PDF> | PAGE <number>
+  Where I found this: SOURCE_PDF | PAGE number
+
+Citation rules:
+- For every plan fact you state, you must support it with a citation line.
+- If the answer is not in the documents, say exactly: Not stated in the document.
+- If force_citations is true, you must double-check you included at least one valid citation line when any plan fact exists.
 
 Selected plan: ${plan || "ASU SHIP"}.
+force_citations: ${forceCitations ? "true" : "false"}
 `.trim();
 }
 
@@ -84,7 +90,7 @@ app.get("/health", (_req, res) => {
 // ---------------------------
 app.post(["/chat", "/api/chat"], async (req, res) => {
   try {
-    const { message, plan } = req.body;
+    const { message, plan, force_citations } = req.body;
 
     if (!message || typeof message !== "string") {
       return res.status(400).json({ error: "Missing message." });
@@ -97,7 +103,7 @@ app.post(["/chat", "/api/chat"], async (req, res) => {
     const response = await client.responses.create({
       model: MODEL,
       input: [
-        { role: "system", content: systemPrompt(plan) },
+        { role: "system", content: systemPrompt(plan, !!force_citations) },
         { role: "user", content: message },
       ],
       max_output_tokens: MAX_OUTPUT_TOKENS,
