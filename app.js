@@ -225,38 +225,42 @@ async function loadDocsForPolicy(policyId) {
 // Dropdown: load policies from backend CSV
 // ---------------------------
 async function loadPoliciesIntoDropdown() {
-  if (!planDropdown) return;
+  console.log("Loading policies from:", POLICIES_URL);
 
-  planDropdown.innerHTML = `<option value="">Loading policies…</option>`;
+  const res = await fetch(POLICIES_URL, { method: "GET" });
 
+  console.log("Policies status:", res.status);
+  const raw = await res.text();
+  console.log("Policies raw response:", raw.slice(0, 500));
+
+  if (!res.ok) throw new Error(`policies http ${res.status}`);
+
+  let data;
   try {
-    const r = await fetch(POLICIES_URL, { method: "GET" });
-    if (!r.ok) throw new Error(`policies http ${r.status}`);
-
-    const data = await r.json();
-    const policies = Array.isArray(data.policies) ? data.policies : [];
-
-    if (!policies.length) {
-      planDropdown.innerHTML = `<option value="">No policies found</option>`;
-      return;
-    }
-
-    planDropdown.innerHTML = `<option value="">Choose a plan…</option>`;
-    policies.forEach((p) => {
-      const opt = document.createElement("option");
-      opt.value = p.policy_id;
-      opt.textContent = p.policy_name;
-      planDropdown.appendChild(opt);
-    });
-  } catch (e) {
-    console.error("Failed to load policies:", e);
-    planDropdown.innerHTML = `<option value="">Failed to load policies</option>`;
-    addMessage(
-      `Couldn't load policies. Check that backend is running and ${POLICIES_URL} returns JSON.`,
-      "bot"
-    );
+    data = JSON.parse(raw);
+  } catch {
+    throw new Error("Policies response was not valid JSON");
   }
+
+  // If your backend returns { policies: [...] }
+  const policies = Array.isArray(data) ? data : data.policies;
+
+  if (!Array.isArray(policies)) {
+    throw new Error("Policies JSON did not contain an array");
+  }
+
+  // populate dropdown
+  planDropdown.innerHTML = `<option value="">Choose a plan…</option>`;
+  policies.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p.policy_id ?? p.id ?? p.policyId ?? "";
+    opt.textContent = p.policy_name ?? p.name ?? "(Unnamed policy)";
+    planDropdown.appendChild(opt);
+  });
+
+  console.log("Loaded policies:", policies.length);
 }
+
 
 function initDropdownHandlers() {
   if (!planDropdown) return;
