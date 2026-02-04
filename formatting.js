@@ -110,6 +110,38 @@ function renderBotTextSafe(str = "") {
   return s;
 }
 
+function renderBotTextSafeWithTerms(text) {
+  // 1) First sanitize allowed HTML (<b> and <a href=...>)
+  // This returns safe HTML (not raw text).
+  let safeHtml = renderBotHtmlSafe(text);
+
+  // 2) Now highlight terms, but ONLY in text nodes, not inside HTML tags.
+  // We'll do a simple split by tags and only replace in non-tag parts.
+  const terms = Object.keys(TERM_DEFS)
+    .sort((a, b) => b.length - a.length)
+    .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
+  if (!terms.length) return safeHtml.replace(/\n/g, "<br/>");
+
+  const re = new RegExp(`\\b(${terms.join("|")})\\b`, "gi");
+
+  safeHtml = safeHtml
+    .split(/(<[^>]+>)/g) // keep tags
+    .map((chunk) => {
+      // If this chunk is an HTML tag, do not touch it
+      if (chunk.startsWith("<") && chunk.endsWith(">")) return chunk;
+
+      // Otherwise, replace terms in the plain text chunk
+      return chunk.replace(re, (match) => {
+        const key = normalizeTermKey(match);
+        return `<span class="term-link" data-term="${escapeHtml(key)}" title="Click to see definition">${match}</span>`;
+      });
+    })
+    .join("");
+
+  return safeHtml.replace(/\n/g, "<br/>");
+}
+
 
 function normalizeTermKey(raw) {
   return (raw || "")
@@ -216,7 +248,7 @@ function addBotMessage(text, citations = []) {
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 
-    const safeText = renderBotHtmlSafe(cleanedText);
+    const safeText = renderBotTextSafeWithTerms(cleanedText);
 
 
   const citationsHtml =

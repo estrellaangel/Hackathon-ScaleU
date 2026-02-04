@@ -337,8 +337,10 @@ function appointmentWhere(choice) {
           "If you feel this is a non-life-threatening issue that still needs same-day attention, urgent care is a good option.\n" +
           "\n" +
           "<b>From the plan:</b>\n" +
-          "- The copay for an urgent care center visit for preferred providers is $25, not subject to the deductible. This cost is only possible when referred by SHC or when SHC is closed, so if there is an option to go to the SHC and you go to urgent care you will have to pay the out-of-network price.\n" +
-          "- For out-of-network services, it covers 50% of the allowed amount after the deductible.\n" +
+          "- <b>In-network urgent care:</b> $25 copay (deductible does not apply).\n" +
+          "- <b>Important:</b> This $25 copay only applies if you were referred by SHC <b>or</b> SHC was closed.\n" +
+          "- If SHC is open and you go to urgent care anyway (without a referral), you may be treated as <b>out-of-network</b>.\n" +
+          "- <b>Out-of-network:</b> You pay the deductible first, then the plan pays 50% of the allowed amount (you pay the other 50%).\n" +
           "\n" +
           "<b>Find Urgent Care Centers:</b>\n" +
           "1. You can find in network urgent care centers by seraching 'Urgent Care' on <a href=\"http://www.uhcsr.com/lookupredirect.aspx?delsys=52\">United Healthcare Medical Care Finder</a>.\n" +
