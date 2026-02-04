@@ -36,8 +36,10 @@ function getApiBase() {
     host === "0.0.0.0";
 
   // Local dev
+  if (isLocal) console.log("IS LOCAL");
   if (isLocal) return "http://localhost:3000";
 
+  console.log("NOT LOCAL");
   // Production (GitHub Pages → Render)
   return "https://hackathon-scaleu-backend.onrender.com";
 }
