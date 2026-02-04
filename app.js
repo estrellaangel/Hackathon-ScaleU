@@ -35,12 +35,16 @@ function getApiBase() {
     host === "127.0.0.1" ||
     host === "0.0.0.0";
 
-  return isLocal ? "http://localhost:3000" : "";
+  // Local dev (frontend on :5500, backend on :3000)
+  if (isLocal) return "http://localhost:3000";
+
+  // Deployed frontend (GitHub Pages) -> deployed backend (Render)
+  return "https://hackathon-scaleu-backend.onrender.com";
 }
 
 const API_BASE = getApiBase();
-const CHAT_URL = `${API_BASE}/api/chat`;
-const POLICIES_URL = `${API_BASE}/api/policies`;
+const CHAT_URL = `${API_BASE}/api/chat`;      // matches your Express route
+const POLICIES_URL = `${API_BASE}/api/policies`; // only works if backend has this route
 
 // ---------------------------
 // State
