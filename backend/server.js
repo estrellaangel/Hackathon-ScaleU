@@ -31,6 +31,10 @@ app.use(
   })
 );
 
+app.get("/", (req, res) => {
+  res.status(200).send("OK - backend is running");
+});
+
 // Always answer preflight
 app.options(/.*/, cors());
 app.options(["/api/chat", "/chat"], (_req, res) => res.sendStatus(204));
