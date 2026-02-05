@@ -137,6 +137,8 @@ async function reaskForCitations(originalQuestion) {
 }
 
 function setChatEnabled(enabled) {
+  console.log("setChatEnabled called with:", enabled);
+  
   if (chatInput) chatInput.disabled = !enabled;
   if (sendBtn) sendBtn.disabled = !enabled;
 
@@ -150,8 +152,17 @@ function setChatEnabled(enabled) {
 
   const lockEl = document.getElementById("chatLock");
   const chatCard = document.querySelector(".chat.card");
-  if (lockEl) lockEl.classList.toggle("hidden", !!enabled);
-  if (chatCard) chatCard.classList.toggle("is-locked", !enabled);
+  
+  console.log("lockEl:", lockEl, "chatCard:", chatCard);
+  
+  if (lockEl) {
+    lockEl.classList.toggle("hidden", !!enabled);
+    console.log("Lock hidden:", !!enabled);
+  }
+  if (chatCard) {
+    chatCard.classList.toggle("is-locked", !enabled);
+    console.log("Card locked:", !enabled);
+  }
 }
 
 function setSelectedPolicy(id, name) {
@@ -263,10 +274,18 @@ async function loadPoliciesIntoDropdown() {
 
 
 function initDropdownHandlers() {
-  if (!planDropdown) return;
+  if (!planDropdown) {
+    console.error("planDropdown element not found!");
+    return;
+  }
+
+  console.log("Dropdown handler initialized");
 
   planDropdown.addEventListener("change", async () => {
+    console.log("Dropdown changed!");
     const id = planDropdown.value || "";
+    console.log("Selected ID:", id);
+    
     if (!id) {
       setSelectedPolicy(null, null);
       renderPlanDocs([]);
@@ -276,8 +295,14 @@ function initDropdownHandlers() {
     const name =
       planDropdown.options[planDropdown.selectedIndex]?.textContent || "Selected plan";
 
+    console.log("Selected name:", name);
     setSelectedPolicy(id, name);
-    await loadDocsForPolicy(id);
+    
+    try {
+      await loadDocsForPolicy(id);
+    } catch (err) {
+      console.error("Error loading docs:", err);
+    }
 
     addMessage(
       `Welcome to AIDed. You selected: ${name}. Ask about costs, coverage, or what to do next.`,
@@ -452,8 +477,13 @@ if (chatForm) {
 // ---------------------------
 // Init
 // ---------------------------
+console.log("App.js is loading...");
 setChatEnabled(false);
 renderPlanDocs([]);
-loadPoliciesIntoDropdown();
+loadPoliciesIntoDropdown().catch(err => {
+  console.error("Failed to load policies:", err);
+  addMessage("Failed to load insurance plans. Make sure the backend server is running on port 3000.", "bot");
+});
 initDropdownHandlers();
 boot();
+console.log("App.js initialization complete");
