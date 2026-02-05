@@ -476,10 +476,243 @@ input:disabled, select:disabled{
   .hero { grid-template-columns: 1fr; }
   .tiles { grid-template-columns: 1fr 1fr; }
   .hero h1 { font-size: 38px; }
+  
+  .wrap { padding: 0 16px; }
+  
+  .chat-head {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .chat-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 34px; }
+  
+  .topbar-inner {
+    padding: 12px 0;
+  }
+  
+  .brand-name {
+    font-size: 15px;
+  }
+  
+  .nav {
+    gap: 6px;
+    font-size: 13px;
+  }
+  
+  .nav a {
+    padding: 6px 8px;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .plan-dropdown {
+    width: 100%;
+  }
+  
+  .plan-controls {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .plan-controls .btn {
+    width: 100%;
+  }
+  
+  .messages {
+    min-height: 320px;
+    padding: 12px;
+  }
+  
+  .msg {
+    max-width: 92%;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .composer {
+    grid-template-columns: 1fr auto;
+    padding: 12px;
+    gap: 8px;
+  }
+  
+  .chat-lock-box {
+    width: 94%;
+    padding: 14px;
+  }
+}
+
 @media (max-width: 520px) {
   .tiles { grid-template-columns: 1fr; }
   .nav a { display: none; }
   .pill { display: inline-flex; }
-  .hero h1 { font-size: 32px; }
+  .hero h1 { font-size: 28px; line-height: 1.1; }
+  
+  .wrap { padding: 0 12px; }
+  
+  .topbar-inner {
+    padding: 10px 0;
+  }
+  
+  .logo {
+    height: 32px;
+    width: 32px;
+    font-size: 14px;
+  }
+  
+  .brand-name {
+    font-size: 14px;
+  }
+  
+  .brand-sub {
+    font-size: 11px;
+  }
+  
+  .hero {
+    padding: 24px 0 10px;
+    gap: 14px;
+  }
+  
+  .note {
+    font-size: 11px;
+    padding: 8px;
+  }
+  
+  .btn {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+  
+  .card {
+    padding: 12px;
+    border-radius: 14px;
+  }
+  
+  .tile {
+    padding: 14px;
+  }
+  
+  .tile-title {
+    font-size: 15px;
+  }
+  
+  .section-head h2 {
+    font-size: 20px;
+  }
+  
+  .quick {
+    padding: 10px 12px;
+    gap: 6px;
+  }
+  
+  .chip {
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+  
+  .messages {
+    padding: 10px;
+    min-height: 280px;
+  }
+  
+  .msg {
+    max-width: 95%;
+    padding: 9px;
+    font-size: 13px;
+  }
+  
+  .composer {
+    padding: 10px;
+    gap: 6px;
+  }
+  
+  .composer input {
+    font-size: 13px;
+  }
+  
+  .chat-head {
+    padding: 12px;
+  }
+  
+  .chat-head h3 {
+    font-size: 15px;
+  }
+  
+  .plan-bar {
+    padding: 12px;
+  }
+  
+  .plan-title {
+    font-size: 12px;
+  }
+  
+  .plan-dropdown {
+    padding: 10px 40px 10px 12px;
+    font-size: 13px;
+  }
+  
+  .doc-pill {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero h1 {
+    font-size: 24px;
+  }
+  
+  .wrap {
+    padding: 0 10px;
+  }
+  
+  .topbar-inner {
+    padding: 8px 0;
+  }
+  
+  .brand {
+    gap: 8px;
+  }
+  
+  .logo {
+    height: 28px;
+    width: 28px;
+    font-size: 12px;
+  }
+  
+  .brand-name {
+    font-size: 13px;
+  }
+  
+  .messages {
+    min-height: 240px;
+  }
+  
+  .msg {
+    font-size: 12px;
+    padding: 8px;
+  }
+  
+  .composer {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .composer .btn {
+    width: 100%;
+  }
 }
