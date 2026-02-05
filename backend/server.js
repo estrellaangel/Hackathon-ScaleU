@@ -159,8 +159,7 @@ app.post(["/chat", "/api/chat"], async (req, res) => {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const ROOT_DIR = path.join(__dirname, "..");
-const POLICIES_DIR = path.join(ROOT_DIR, "policies");
+const POLICIES_DIR = path.join(__dirname, "policies");
 
 const ALL_POLICIES_CSV = path.join(POLICIES_DIR, "all_policies.csv");
 const POLICY_DOCS_CSV = path.join(POLICIES_DIR, "policy_documents.csv");
