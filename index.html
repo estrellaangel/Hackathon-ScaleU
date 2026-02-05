@@ -73,115 +73,68 @@
     </section>
 
     <section id="assistant" class="prototype">
-      <div class="section-head">
-        <h2>AI Assistant</h2>
-        <p class="muted">
-          Select your insurance plan and get personalized guidance on coverage and healthcare options.
-        </p>
-      </div>
+  <div class="section-head">
+    <h2>AI Assistant</h2>
+    <p class="muted">
+      Select your insurance plan and get personalized guidance on coverage and healthcare options.
+    </p>
+  </div>
 
-      <!-- <div class="grid">
-        <aside class="sidebar-insurance">
-          <div class="card sidebar-card">
-            <div class="card-head">
-              <div>
-                <div class="card-title"><i class="fas fa-shield-alt"></i> Your Insurance</div>
-                <div class="muted small">Select your health insurance plan</div>
-              </div>
-            </div>
+  <div id="planBar" class="plan-bar">
+    <div class="plan-title">Select your insurance plan</div>
 
-            <div class="insurance-slider">
+    <div class="plan-controls">
+      <select id="planDropdown" class="plan-dropdown">
+        <option value="">Choose a plan…</option>
+      </select>
+    </div>
 
-              <div class="insurance-option" data-plan="ASU Student Health">
-                <div class="insurance-icon" style="background: linear-gradient(135deg, #8C1D40, #5C0F2A);">
-                  <span>ASU</span>
-                </div>
-                <div class="insurance-details">
-                  <h4>ASU Student Health</h4>
-                  <p>Campus health coverage</p>
-                </div>
-              </div>
-            </div>
+    <div id="planDocs" class="plan-docs hidden"></div>
+  </div>
 
-            <div class="mini">
-              <div class="mini-row">
-                <div class="mini-label">Selected Plan</div>
-                <div class="mini-value" id="selectedPlanText">None</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Money Saver Tips</div>
-            <ul class="list">
-              <li>Check in-network status before booking</li>
-              <li>Telehealth is often cheaper for common issues</li>
-              <li>Know deductible vs copay differences</li>
-              <li>Ask for itemized bills if charges look wrong</li>
-            </ul>
-          </div>
-        </aside> -->
-
-        <div id="planBar" class="plan-bar">
-          <div class="plan-title">Select your insurance plan</div>
-
-          <div class="plan-controls">
-            <select id="planDropdown" class="plan-dropdown">
-              <option value="">Choose a plan…</option>
-            </select>
-          </div>
-
-          <div id="planDocs" class="plan-docs hidden"></div>
+  <section class="col-right">
+    <div class="chat card is-locked">
+      <div class="chat-head">
+        <div>
+          <div class="card-title">Chat</div>
+          <div class="muted small">Ask about coverage, costs, and best options under your plan.</div>
         </div>
 
-      <section class="col-right">
-        <div class="chat card is-locked">
-          <div class="chat-head">
-            <div>
-              <div class="card-title">Chat</div>
-              <div class="muted small">Ask about coverage, costs, and best options under your plan.</div>
-            </div>
+        <div class="chat-actions">
+          <button class="btn ghost" id="resetChatBtn" type="button">Reset</button>
+        </div>
+      </div>
 
-            <div class="chat-actions">
-              <button class="btn ghost" id="resetChatBtn" type="button">Reset</button>
-            </div>
-          </div>
-
-          <!-- Chat lock overlay (shown until plan selected) -->
-          <div id="chatLock" class="chat-lock">
-            <div class="chat-lock-box">
-              <div class="chat-lock-title">Select your insurance plan first</div>
-              <div class="chat-lock-sub">
-                I’ll unlock the chat once you pick a plan, so answers match your coverage and costs.
-              </div>
-            </div>
-          </div>
-
-          <div class="quick">
-            <button class="chip" type="button" data-prompt="I need care for a sore throat. What is my cheapest option?">Sore throat</button>
-            <button class="chip" type="button" data-prompt="Is telehealth covered and when should I use it?">Telehealth</button>
-            <button class="chip" type="button" data-prompt="I think I need urgent care. What will it likely cost under my plan?">Urgent care cost</button>
-            <button class="chip" type="button" data-prompt="What should I ask before getting a lab test so I do not get surprise bills?">Avoid surprise bills</button>
-          </div>
-
-          <div class="messages" id="messages">
-            <!-- Messages render here -->
-          </div>
-
-          <form class="composer" id="chatForm">
-            <input id="chatInput" type="text" placeholder="Select an insurance plan to start..." autocomplete="off" disabled />
-            <button class="btn primary" type="submit" disabled>Send</button>
-          </form>
-
-          <div class="muted small chat-foot">
-            Educational prototype. Not medical advice.
+      <div id="chatLock" class="chat-lock">
+        <div class="chat-lock-box">
+          <div class="chat-lock-title">Select your insurance plan first</div>
+          <div class="chat-lock-sub">
+            I’ll unlock the chat once you pick a plan, so answers match your coverage and costs.
           </div>
         </div>
-      </section>
-
-        
       </div>
-    </section>
+
+      <div class="quick">
+        <button class="chip" type="button" data-prompt="I need care for a sore throat. What is my cheapest option?">Sore throat</button>
+        <button class="chip" type="button" data-prompt="Is telehealth covered and when should I use it?">Telehealth</button>
+        <button class="chip" type="button" data-prompt="I think I need urgent care. What will it likely cost under my plan?">Urgent care cost</button>
+        <button class="chip" type="button" data-prompt="What should I ask before getting a lab test so I do not get surprise bills?">Avoid surprise bills</button>
+      </div>
+
+      <div class="messages" id="messages"></div>
+
+      <form class="composer" id="chatForm">
+        <input id="chatInput" type="text" placeholder="Select an insurance plan to start..." autocomplete="off" disabled />
+        <button class="btn primary" type="submit" disabled>Send</button>
+      </form>
+
+      <div class="muted small chat-foot">
+        Educational prototype. Not medical advice.
+      </div>
+    </div>
+  </section>
+</section>
+
 
     <section id="features" class="features">
       <div class="section-head">
@@ -228,6 +181,9 @@
     </div>
   </footer>
 
+  <script src="formatting.js"></script>
+  <script src="chatResponseProtocols.js"></script>
   <script src="app.js"></script>
+
 </body>
 </html>

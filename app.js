@@ -1,14 +1,16 @@
+// app.js
+// ----------------------------------------------------
+// Main UI logic: policy dropdown, chat submit, backend calls.
+// Uses window.Formatting and window.ChatProtocols
+// ----------------------------------------------------
+
 // ---------------------------
 // DOM
 // ---------------------------
-const selectedPlanText = document.getElementById("selectedPlanText");
 const planPill = document.getElementById("planPill");
-
-const insuranceOptions = document.querySelectorAll(".insurance-option"); // sidebar
-const planBtns = document.querySelectorAll(".plan-btn"); // optional top buttons
-
-const planDropdown = document.getElementById("planDropdown"); // optional dropdown
-const planDocsEl = document.getElementById("planDocs"); // optional docs row
+const selectedPlanText = document.getElementById("selectedPlanText"); // optional if present
+const planDropdown = document.getElementById("planDropdown");
+const planDocsEl = document.getElementById("planDocs");
 
 const messagesEl = document.getElementById("messages");
 const chatForm = document.getElementById("chatForm");
@@ -16,50 +18,52 @@ const chatInput = document.getElementById("chatInput");
 const resetChatBtn = document.getElementById("resetChatBtn");
 const chips = document.querySelectorAll(".chip");
 
-// Submit button
 const sendBtn = chatForm
   ? chatForm.querySelector('button[type="submit"], input[type="submit"]')
   : null;
 
 // ---------------------------
-// Config
+// API base
 // ---------------------------
-// Use /api/chat in production (same origin).
-// In local dev, if your frontend is served from a different port (Live Server, Vite, etc),
-// call the backend explicitly on :3000.
-const API_URL = "http://localhost:3000/api/chat";
+// IMPORTANT: Live Server runs on 127.0.0.1:5500.
+// If you POST to "/api/chat" there, you'll hit the STATIC server => 405.
+// So when hostname is localhost/127.0.0.1, use backend at :3000.
+function getApiBase() {
+  const host = window.location.hostname;
+  const isLocal =
+    host === "localhost" ||
+    host === "127.0.0.1" ||
+    host === "0.0.0.0";
 
-// Links for “Sources”
-const SHORT_LINK = "https://eoss.asu.edu/health/billing-insurance/coverage-options";
-const CERT_LINK = "https://www.uhcsr.com/asu";
+  // Local dev
+  if (isLocal) console.log("IS LOCAL");
+  if (isLocal) return "http://localhost:3000";
 
-// Exact SOURCE_PDF filename -> link
-const PDF_LINKS = {
-  "asu_ship_short_plan.pdf": SHORT_LINK,
-  "asu_ship_certificate.pdf": CERT_LINK,
-};
+  console.log("NOT LOCAL");
+  // Production (GitHub Pages → Render)
+  return "https://hackathon-scaleu-backend.onrender.com";
+}
 
-// Plan docs shown in the UI after selection
-const PLAN_DOCS = {
-  "ASU SHIP": [
-    { label: "ASU Plan Summary", url: SHORT_LINK },
-    { label: "Certificate / Full Policy", url: CERT_LINK },
-  ],
-  // Add more plans later:
-  // "Some Other Plan": [{ label: "...", url: "..." }]
-};
+const API_BASE = getApiBase();
+const CHAT_URL = `${API_BASE}/api/chat`;
+const POLICIES_URL = `${API_BASE}/api/policies`;
 
 // ---------------------------
 // State
 // ---------------------------
-let selectedPlan = null;
+let selectedPolicyId = null;
+let selectedPolicyName = null;
+
 let inFlight = false;
 let lastSubmitAt = 0;
-const COOLDOWN_MS = 1200;
-let lastPlanAnnounced = "";
+const COOLDOWN_MS = 800;
+
+// If the model forgets to include citations, we do ONE automatic retry.
+// Prevents infinite loops and gives you a clean signal when citations are missing.
+const citationRetryByQuestion = new Map(); // questionText -> count
 
 // ---------------------------
-// Helpers
+// UI helpers
 // ---------------------------
 function escapeHtml(str) {
   return (str || "").replace(/[&<>"']/g, (m) => ({
@@ -71,294 +75,224 @@ function escapeHtml(str) {
   }[m]));
 }
 
+function renderBotTextSafe(str = "") {
+  // Escape everything first
+  let s = escapeHtml(str);
+
+  // Allow ONLY <b> and </b>
+  s = s.replace(/&lt;b&gt;/g, "<b>").replace(/&lt;\/b&gt;/g, "</b>");
+
+  return s;
+}
+
 function addMessage(text, who = "bot") {
   const div = document.createElement("div");
   div.className = "msg" + (who === "you" ? " you" : "");
+  const safe = who === "bot" ? renderBotTextSafe(text) : escapeHtml(text);
   div.innerHTML = `
-    <div>${escapeHtml(text).replace(/\n/g, "<br/>")}</div>
+    <div>${safe.replace(/\n/g, "<br/>")}</div>
     <div class="meta">${who === "you" ? "You" : "Bot"}</div>
   `;
   messagesEl.appendChild(div);
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
+// formatting.js calls addMessage internally, so expose it globally:
+window.addMessage = addMessage;
+
+function hasValidCitations(citations) {
+  const arr = Array.isArray(citations) ? citations : [];
+  return arr.some((c) => !!c && c.isValid === true);
+}
+
+async function reaskForCitations(originalQuestion) {
+  const count = Number(citationRetryByQuestion.get(originalQuestion) || 0);
+  if (count >= 1) return null; // only retry once
+  citationRetryByQuestion.set(originalQuestion, count + 1);
+
+  // Ask the backend again with a stronger instruction and a flag.
+  // Backend will tighten formatting + require citations.
+  const r = await fetch(CHAT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message:
+      originalQuestion +
+      "\n\nIMPORTANT: did not give a citation before needs to give a citation. " +
+      "Include at least one 'Where I found this: <SOURCE_PDF> | PAGE <number>' line for every plan fact. " +
+      "If you cannot find it, say: Not stated in the document.",
+      plan: selectedPolicyName || selectedPolicyId,
+      policy_id: selectedPolicyId,
+      force_citations: true,
+    }),
+  });
+
+  let data = {};
+  const contentType = r.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) data = await r.json();
+  else data = { error: await r.text() };
+
+  if (!r.ok) return null;
+  return data.answer || null;
+}
+
 function setChatEnabled(enabled) {
-  chatInput.disabled = !enabled;
+  if (chatInput) chatInput.disabled = !enabled;
   if (sendBtn) sendBtn.disabled = !enabled;
-  document.querySelectorAll(".chip").forEach(btn => (btn.disabled = !enabled));
 
-  chatInput.placeholder = enabled
-    ? "Type your question..."
-    : "Select an insurance plan to start...";
+  chips.forEach((btn) => (btn.disabled = !enabled));
 
-  // NEW: show/hide overlay + lock styling
+  if (chatInput) {
+    chatInput.placeholder = enabled
+      ? "Type your question..."
+      : "Select a healthcare policy to start...";
+  }
+
   const lockEl = document.getElementById("chatLock");
   const chatCard = document.querySelector(".chat.card");
-
   if (lockEl) lockEl.classList.toggle("hidden", !!enabled);
   if (chatCard) chatCard.classList.toggle("is-locked", !enabled);
 }
 
+function setSelectedPolicy(id, name) {
+  selectedPolicyId = id || null;
+  selectedPolicyName = name || null;
 
-function resolvePdfUrl(pdf, page) {
-  if (!pdf) return null;
-
-  let url = PDF_LINKS[pdf] || null;
-
-  // fallback heuristic: if it contains "short", treat as short link; otherwise certificate link
-  if (!url) {
-    const lower = pdf.toLowerCase();
-    url = lower.includes("short") ? SHORT_LINK : CERT_LINK;
+  if (planPill) {
+    planPill.textContent = selectedPolicyName
+      ? `Plan: ${selectedPolicyName}`
+      : "Plan: Not selected";
   }
 
-  if (url && page) return `${url}#page=${page}`;
-  return url;
-}
-
-function parseCitations(text) {
-  const cites = [];
-  const re = /Where I found this:\s*([^\s|]+)\s*\|\s*PAGE\s*(\d+)/g;
-  let m;
-
-  while ((m = re.exec(text || "")) !== null) {
-    const pdf = (m[1] || "").trim();
-    const page = Number(m[2]);
-    cites.push({ pdf, page, url: resolvePdfUrl(pdf, page) });
-  }
-  return cites;
-}
-
-// ---------------------------
-// Glossary (clickable terms)
-// ---------------------------
-const TERM_DEFS = {
-  "copay": "Copay: A fixed fee you pay for a visit or service (example: $25 per visit).",
-  "co-pay": "Copay: A fixed fee you pay for a visit or service (example: $25 per visit).",
-  "deductible": "Deductible: The amount you pay before the plan starts paying for many services.",
-  "deductibles": "Deductible: The amount you pay before the plan starts paying for many services.",
-  "coinsurance": "Coinsurance: A percent split after deductible (example: plan pays 80%, you pay 20%).",
-  "out-of-pocket max": "Out-of-pocket max: The most you pay in a policy year for covered services.",
-  "out of pocket max": "Out-of-pocket max: The most you pay in a policy year for covered services.",
-  "out-of-pocket": "Out-of-pocket: What you pay yourself (copays + deductible + coinsurance).",
-  "allowed amount": "Allowed Amount: The price the plan uses to calculate your share (not always the billed amount).",
-  "in-network": "In-network: Providers with contracted rates. Usually cheaper.",
-  "SHC": "Student Health Center (SHC): ASU student health center, should be your first stop for non-emergency care. Located at: 451 E University Dr, Tempe, AZ 85281.",
-  "preferred provider": "Preferred Provider: Same idea as in-network—contracted providers with lower costs.",
-  "out-of-network": "Out-of-network: Providers without contracted rates. Usually higher cost.",
-  "premium": "Premium: What you pay to have the insurance coverage.",
-  "referral": "Referral: Required approval before certain care. ASU SHIP referrals often follow Student Health Center rules.",
-  "insurance provider" : "Insurance Provider: The company that offers the insurance plan (for ASU SHIP, it's UnitedHealthcare StudentResources).",
-  
-};
-
-function normalizeTermKey(raw) {
-  return (raw || "")
-    .toLowerCase()
-    .replace(/^[^\w]+|[^\w]+$/g, "")
-    .trim();
-}
-
-function showDefinition(termKey) {
-  const key = normalizeTermKey(termKey);
-  const def = TERM_DEFS[key];
-  if (!def) return;
-  addMessage(def, "bot");
-}
-
-function renderBotTextWithClickableTerms(text) {
-  const safe = escapeHtml(text || "");
-
-  const terms = Object.keys(TERM_DEFS)
-    .sort((a, b) => b.length - a.length)
-    .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-
-  if (!terms.length) return safe.replace(/\n/g, "<br/>");
-
-  const re = new RegExp(`\\b(${terms.join("|")})\\b`, "gi");
-
-  const withLinks = safe.replace(re, (match) => {
-    const key = normalizeTermKey(match);
-    return `<span class="term-link" data-term="${escapeHtml(key)}" title="Click to see definition">${match}</span>`;
-  });
-
-  return withLinks.replace(/\n/g, "<br/>");
-}
-
-function renderBotTextAllowBoldAndTerms(text) {
-  // Convert <b>...</b> to a temporary token so it won't get escaped
-  const tokenized = String(text || "")
-    .replace(/<\s*b\s*>/gi, "__B_OPEN__")
-    .replace(/<\s*\/\s*b\s*>/gi, "__B_CLOSE__");
-
-  // Escape everything (prevents arbitrary HTML injection)
-  let safe = escapeHtml(tokenized);
-
-  // Restore only the <b> tags we intentionally allow
-  safe = safe
-    .replace(/__B_OPEN__/g, "<b>")
-    .replace(/__B_CLOSE__/g, "</b>");
-
-  // Now apply clickable term highlighting (same logic as before)
-  const terms = Object.keys(TERM_DEFS)
-    .sort((a, b) => b.length - a.length)
-    .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-
-  if (terms.length) {
-    const re = new RegExp(`\\b(${terms.join("|")})\\b`, "gi");
-    safe = safe.replace(re, (match) => {
-      const key = normalizeTermKey(match);
-      return `<span class="term-link" data-term="${escapeHtml(
-        key
-      )}" title="Click to see definition">${match}</span>`;
-    });
+  if (selectedPlanText) {
+    selectedPlanText.textContent = selectedPolicyName || "None";
   }
 
-  // Newlines -> <br/>
-  return safe.replace(/\n/g, "<br/>");
-}
+  setChatEnabled(!!selectedPolicyId);
 
-
-function addBotMessage(text, citations = []) {
-  const div = document.createElement("div");
-  div.className = "msg";
-
-  // const safeText = renderBotTextWithClickableTerms(text);
-  const safeText = renderBotTextAllowBoldAndTerms(text);
-
-
-  const citationsHtml =
-    citations && citations.length
-      ? `
-      <div class="citations" style="margin-top:8px; font-size:0.9em;">
-        <div style="opacity:.8; margin-bottom:4px;">Sources</div>
-        ${citations
-          .map((c) => {
-            const pdf = c.pdf || "Unknown";
-            const page = Number(c.page) || "";
-            const label = `${pdf}${page ? ` | PAGE ${page}` : ""}`;
-            const url = c.url || null;
-
-            return url
-              ? `<div><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a></div>`
-              : `<div>${escapeHtml(label)}</div>`;
-          })
-          .join("")}
-      </div>
-    `
-      : "";
-
-  div.innerHTML = `
-    <div>${safeText}</div>
-    ${citationsHtml}
-    <div class="meta">Bot</div>
-  `;
-
-  messagesEl.appendChild(div);
-  messagesEl.scrollTop = messagesEl.scrollHeight;
-
-  // term click handlers inside this message
-  div.querySelectorAll(".term-link").forEach((el) => {
-    el.addEventListener("click", () => showDefinition(el.getAttribute("data-term")));
-  });
+  // Reset any active protocol flow when switching plans
+  if (window.ChatProtocols?.resetFlow) window.ChatProtocols.resetFlow();
 }
 
 // ---------------------------
-// Plan docs renderer
+// Plan docs UI
 // ---------------------------
-function renderPlanDocs(plan) {
+function renderPlanDocs(docs) {
   if (!planDocsEl) return;
 
-  const docs = PLAN_DOCS[plan] || [];
-  if (!plan || !docs.length) {
+  const arr = Array.isArray(docs) ? docs : [];
+  if (!arr.length) {
     planDocsEl.classList.add("hidden");
     planDocsEl.innerHTML = "";
     return;
   }
 
   planDocsEl.classList.remove("hidden");
+
   planDocsEl.innerHTML = `
     <div class="doc-row" style="display:flex; gap:10px; flex-wrap:wrap;">
-      ${docs
-        .map(
-          (d) => `
-        <a class="doc-pill" target="_blank" rel="noopener noreferrer" href="${escapeHtml(d.url)}">
-          ${escapeHtml(d.label)}
-        </a>
-      `
-        )
+      ${arr
+        .map((d) => {
+          const label = d.pdf_file || d.txt_file || "Document";
+          const url = d.link || d.txt_url || "";
+          if (!url) return `<span class="doc-pill">${escapeHtml(label)}</span>`;
+          return `
+            <a class="doc-pill" target="_blank" rel="noopener noreferrer" href="${escapeHtml(url)}">
+              ${escapeHtml(label)}
+            </a>
+          `;
+        })
         .join("")}
     </div>
   `;
 }
 
-// ---------------------------
-// Plan selection (single source of truth)
-// ---------------------------
-function setSelectedPlan(plan) {
-  selectedPlan = plan || null;
+async function loadDocsForPolicy(policyId) {
+  if (!policyId) return renderPlanDocs([]);
 
-  if (planPill) planPill.textContent = `Plan: ${selectedPlan || "Not selected"}`;
-  if (selectedPlanText) selectedPlanText.textContent = selectedPlan || "None";
-
-  setChatEnabled(!!selectedPlan);
-  renderPlanDocs(selectedPlan);
-
-  // sync selected class on sidebar
-  insuranceOptions.forEach((opt) => {
-    opt.classList.toggle("selected", opt.dataset.plan === selectedPlan);
-  });
-
-  // sync selected class on buttons
-  planBtns.forEach((btn) => {
-    btn.classList.toggle("selected", btn.dataset.plan === selectedPlan);
-  });
-
-  // sync dropdown
-  if (planDropdown) {
-    planDropdown.value = selectedPlan || "";
-  }
-
-  // announce once per plan
-  if (selectedPlan && selectedPlan !== lastPlanAnnounced) {
-    lastPlanAnnounced = selectedPlan;
-    addMessage(`Welcome to AIDed, I'm here to help navigate your healthcare policy. You selected plan: ${selectedPlan}. Ask about costs, coverage, or what to do next.`, "bot");
+  try {
+    const r = await fetch(`${API_BASE}/api/policies/${encodeURIComponent(policyId)}/docs`);
+    if (!r.ok) throw new Error(`docs http ${r.status}`);
+    const data = await r.json();
+    renderPlanDocs(data.docs || []);
+  } catch (e) {
+    console.error("Failed to load docs:", e);
+    renderPlanDocs([]);
   }
 }
 
-// Sidebar plan click
-insuranceOptions.forEach((option) => {
-  option.addEventListener("click", () => setSelectedPlan(option.dataset.plan));
-});
+// ---------------------------
+// Dropdown: load policies from backend CSV
+// ---------------------------
+async function loadPoliciesIntoDropdown() {
+  console.log("Loading policies from:", POLICIES_URL);
 
-// Top plan button click
-planBtns.forEach((btn) => {
-  btn.addEventListener("click", () => setSelectedPlan(btn.dataset.plan));
-});
+  const res = await fetch(POLICIES_URL, { method: "GET" });
 
-// Dropdown setup + change handler (optional)
-function initDropdownIfPresent() {
-  if (!planDropdown) return;
+  console.log("Policies status:", res.status);
+  const raw = await res.text();
+  console.log("Policies raw response:", raw.slice(0, 500));
 
-  // populate from PLAN_DOCS keys
-  const plans = Object.keys(PLAN_DOCS);
+  if (!res.ok) throw new Error(`policies http ${res.status}`);
+
+  let data;
+  try {
+    data = JSON.parse(raw);
+  } catch {
+    throw new Error("Policies response was not valid JSON");
+  }
+
+  // If your backend returns { policies: [...] }
+  const policies = Array.isArray(data) ? data : data.policies;
+
+  if (!Array.isArray(policies)) {
+    throw new Error("Policies JSON did not contain an array");
+  }
+
+  // populate dropdown
   planDropdown.innerHTML = `<option value="">Choose a plan…</option>`;
-  plans.forEach((p) => {
+  policies.forEach(p => {
     const opt = document.createElement("option");
-    opt.value = p;
-    opt.textContent = p;
+    opt.value = p.policy_id ?? p.id ?? p.policyId ?? "";
+    opt.textContent = p.policy_name ?? p.name ?? "(Unnamed policy)";
     planDropdown.appendChild(opt);
   });
 
-  planDropdown.addEventListener("change", () => {
-    setSelectedPlan(planDropdown.value);
+  console.log("Loaded policies:", policies.length);
+}
+
+
+function initDropdownHandlers() {
+  if (!planDropdown) return;
+
+  planDropdown.addEventListener("change", async () => {
+    const id = planDropdown.value || "";
+    if (!id) {
+      setSelectedPolicy(null, null);
+      renderPlanDocs([]);
+      return;
+    }
+
+    const name =
+      planDropdown.options[planDropdown.selectedIndex]?.textContent || "Selected plan";
+
+    setSelectedPolicy(id, name);
+    await loadDocsForPolicy(id);
+
+    addMessage(
+      `Welcome to AIDed. You selected: ${name}. Ask about costs, coverage, or what to do next.`,
+      "bot"
+    );
   });
 }
 
-// Chips should not work until plan selected
+// ---------------------------
+// Chips (quick prompts)
+// ---------------------------
 chips.forEach((btn) => {
   btn.addEventListener("click", () => {
-    if (!selectedPlan) {
-      addMessage("Select an insurance plan first, then you can use quick prompts.", "bot");
+    if (!selectedPolicyId) {
+      addMessage("Select a healthcare policy first, then use quick prompts.", "bot");
       return;
     }
     chatInput.value = btn.dataset.prompt || "";
@@ -367,18 +301,16 @@ chips.forEach((btn) => {
 });
 
 // ---------------------------
-// Reset / boot
+// Reset
 // ---------------------------
 function boot() {
-  // messagesEl.innerHTML = "";
-  // addMessage(
+  if (messagesEl) messagesEl.innerHTML = "";
+  if (window.ChatProtocols?.resetFlow) window.ChatProtocols.resetFlow();
 
-  // );
+  addMessage("Select a plan, then ask a question like: “Is urgent care covered?”", "bot");
 }
 
-if (resetChatBtn) {
-  resetChatBtn.addEventListener("click", boot);
-}
+if (resetChatBtn) resetChatBtn.addEventListener("click", boot);
 
 // ---------------------------
 // Chat submit handler
@@ -387,79 +319,141 @@ if (chatForm) {
   chatForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    if (!selectedPlan) {
-      addMessage("Select an insurance plan first so I can tailor answers.", "bot");
+    if (!selectedPolicyId) {
+      addMessage("Select a healthcare policy first so I can tailor answers.", "bot");
       return;
     }
 
     const text = (chatInput.value || "").trim();
     if (!text) return;
 
+    // cooldown
     const now = Date.now();
-    if (now - lastSubmitAt < COOLDOWN_MS) {
-      addMessage("One sec — sending too fast. Try again in a moment.", "bot");
-      return;
-    }
+    if (now - lastSubmitAt < COOLDOWN_MS) return;
     lastSubmitAt = now;
 
     if (inFlight) return;
-    inFlight = true;
-    if (sendBtn) sendBtn.disabled = true;
 
+    // ✅ 1) Always print user message FIRST
     addMessage(text, "you");
     chatInput.value = "";
 
+    // ✅ 2) If a protocol flow is active, let it consume input
+    if (window.ChatProtocols?.handleUserInput?.(text)) {
+      return;
+    }
+
+    // ✅ 3) Trigger protocol AFTER user message is in DOM
+    let started = false;
+    await new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        started = !!window.ChatProtocols?.maybeStartAppointmentFlow?.(text);
+        resolve();
+      });
+    });
+    if (started) return;
+
+    // ✅ 4) No protocol → proceed to backend
+    inFlight = true;
+    if (sendBtn) sendBtn.disabled = true;
+
     try {
-      const r = await fetch(API_URL, {
+      const r = await fetch(CHAT_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, plan: selectedPlan }),
+        body: JSON.stringify({
+          message: text,
+          plan: selectedPolicyName || selectedPolicyId,
+          policy_id: selectedPolicyId,
+        }),
       });
 
       let data = {};
       const contentType = r.headers.get("content-type") || "";
-      if (contentType.includes("application/json")) {
-        data = await r.json();
-      } else {
-        data = { error: await r.text() };
-      }
-
-      if (r.status === 429) {
-        addMessage(
-          data.error ||
-            "We hit a rate/quota limit. Check OpenAI billing/usage or slow down requests.",
-          "bot"
-        );
-        return;
-      }
+      if (contentType.includes("application/json")) data = await r.json();
+      else data = { error: await r.text() };
 
       if (!r.ok) {
         addMessage(data.error || `Server error (${r.status}).`, "bot");
         return;
       }
 
-      const answerText = data.answer || "No response.";
-      const citations =
-        Array.isArray(data.citations) && data.citations.length
-          ? data.citations
-          : parseCitations(answerText);
+      let answerText = data.answer || "No response.";
 
-      addBotMessage(answerText, citations);
+      let citations = window.Formatting?.parseAndValidateCitations
+        ? window.Formatting.parseAndValidateCitations(answerText)
+        : [];
+
+      // --- Citation guardrail ---
+      // If there are NO valid citations, automatically retry once.
+      if (!hasValidCitations(citations)) {
+        addMessage(
+          "⚠️ I couldn’t verify that answer in your plan documents (no valid citations). Retrying with stricter citation requirements…",
+          "bot"
+        );
+
+        const retried = await reaskForCitations(text);
+        if (retried) {
+          answerText = retried;
+          citations = window.Formatting?.parseAndValidateCitations
+            ? window.Formatting.parseAndValidateCitations(answerText)
+            : [];
+        }
+      }
+
+      // Final render
+      if (window.Formatting?.addBotMessage) {
+        window.Formatting.addBotMessage(answerText, citations);
+      } else {
+        addMessage(answerText, "bot");
+      }
+
+      // If STILL no valid citations after retry, emit a clear UI signal
+      // If STILL no valid citations after retry, stop and give a safe fallback
+      if (!hasValidCitations(citations)) {
+        window.ChatProtocols?.resetFlow?.();
+
+        addMessage(
+          "<b>Bot is unsure.</b>\n" +
+            "I couldn’t find a verifiable citation in your plan documents for that question.\n\n" +
+            "Here’s a general explanation (not plan-specific):\n" +
+            "- Costs usually depend on visit type (SHC vs urgent care vs ER), network status (in/out), and whether deductible applies.\n" +
+            "- If you tell me the exact service + where you plan to go (SHC / urgent care / ER) I can try again and look for a cited plan rule.",
+          "bot"
+        );
+
+        return;
+      }
+
+
+      // After AI responds, optionally offer interactive appointment help
+      requestAnimationFrame(() => {
+        // Offer appointment help if the USER asked a cost/money question about care
+        window.ChatProtocols?.maybeOfferAppointmentCTAFromUserText?.(text);
+
+        // Also offer if the AI answer implies appointment/referral/etc.
+        window.ChatProtocols?.maybeOfferDoctorCTA?.(answerText);
+      });
+
     } catch (err) {
-      addMessage("Server error. Is the backend running?", "bot");
+      console.error(err);
+      addMessage(
+        `Server error. If you're using Live Server, make sure API_BASE is http://localhost:3000. Current CHAT_URL: ${CHAT_URL}`,
+        "bot"
+      );
     } finally {
       inFlight = false;
-      if (sendBtn) sendBtn.disabled = !selectedPlan;
+      if (sendBtn) sendBtn.disabled = !selectedPolicyId;
     }
   });
 }
 
+
 // ---------------------------
 // Init
 // ---------------------------
-boot();
-initDropdownIfPresent();
 setChatEnabled(false);
-renderPlanDocs(null);
-if (planPill) planPill.textContent = "Plan: Not selected";
-if (selectedPlanText) selectedPlanText.textContent = "None";
+renderPlanDocs([]);
+loadPoliciesIntoDropdown();
+initDropdownHandlers();
+boot();
