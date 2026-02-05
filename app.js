@@ -41,7 +41,7 @@ function getApiBase() {
 
   console.log("NOT LOCAL");
   // Production (GitHub Pages → Render)
-  return "https://hackathon-scaleu-backend.onrender.com";
+  return "https://aided-app.onrender.com";
 }
 
 const API_BASE = getApiBase();
